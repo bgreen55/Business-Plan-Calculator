@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real Estate Business Plan Calculator</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real Estate Business Plan Calculator</title>
 
-    <!-- ✅ React development builds (not minified) -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- ✅ Use React 18 development builds (must come before Babel script) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-    <!-- ✅ Babel to compile JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- ✅ Babel so JSX compiles in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Tailwind + Lucide -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-  </head>
+  <!-- ✅ Tailwind + Lucide icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50">
+  <div id="root"></div>
 
-  <body class="bg-gray-50">
-    <div id="root"></div>
-
-    <!-- ✅ Important: This must be text/babel -->
-    <script type="text/babel" src="./app.js"></script>
-  </body>
+  <!-- ✅ Your React app -->
+  <script type="text/babel" src="./app.js"></script>
+</body>
 </html>
