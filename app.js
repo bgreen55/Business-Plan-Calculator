@@ -746,7 +746,6 @@ const RealEstateBusinessPlan = () => {
   );
 };
 
-export default RealEstateBusinessPlan;
-
+// Render the component
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<RealEstateBusinessPlan />);
