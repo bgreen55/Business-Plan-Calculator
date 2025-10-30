@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download } from 'lucide-react';
+import { Calculator, ArrowLeft } from 'lucide-react';
 
 const RealEstateBusinessPlan = () => {
   const [formData, setFormData] = useState({
@@ -41,6 +41,8 @@ const RealEstateBusinessPlan = () => {
     otherExpense: ''
   });
 
+  const [showResults, setShowResults] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -75,20 +77,17 @@ const RealEstateBusinessPlan = () => {
       other: 0
     };
 
-    // Listing Specialist
     if (formData.payListingSpecialist === 'yes') {
       const lsPercent = parseFloat(formData.listingSpecialistPercent) || 0;
       costs.listingSpecialist = (totalGCI * (listingPercent / 100)) * (lsPercent / 100);
     }
 
-    // Buyer Specialist
     if (formData.payBuyerSpecialist === 'yes') {
       const bsPercent = parseFloat(formData.buyerSpecialistPercent) || 0;
       const bsCommission = parseFloat(formData.buyerSpecialistCommission) || 0;
       costs.buyerSpecialist = buyerCount * (bsPercent / 100) * bsCommission;
     }
 
-    // Referral Fees
     if (formData.hasReferralFees === 'yes') {
       const refCount = parseFloat(formData.referralCount) || 0;
       const refPercent = parseFloat(formData.referralPercent) || 0;
@@ -96,22 +95,18 @@ const RealEstateBusinessPlan = () => {
       costs.referralFees = refCount * avgComm * (refPercent / 100);
     }
 
-    // Closing Gifts
     if (formData.providesClosingGifts === 'yes') {
       costs.closingGifts = parseFloat(formData.closingGiftBudget) || 0;
     }
 
-    // TC
     if (formData.payTC === 'yes') {
       costs.tc = (parseFloat(formData.tcAmount) || 0) * goalTrans;
     }
 
-    // KW Cares
     if (formData.kwCares === 'yes') {
       costs.kwCares = (parseFloat(formData.kwCaresAmount) || 0) * goalTrans;
     }
 
-    // Other
     if (formData.otherCostOfSale === 'yes') {
       costs.other = (parseFloat(formData.otherCostAmount) || 0) * goalTrans;
     }
@@ -135,8 +130,22 @@ const RealEstateBusinessPlan = () => {
     };
   };
 
-  const generatePDF = async () => {
-    const { avgCommissionDollar, totalGCI } = calculateValues();
+  const formatCurrency = (value) => {
+    return value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  };
+
+  const handleCalculate = () => {
+    setShowResults(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackToForm = () => {
+    setShowResults(false);
+  };
+
+  const { avgCommissionDollar, totalGCI } = calculateValues();
+
+  if (showResults) {
     const costOfSales = calculateCostOfSales();
     const opExpenses = calculateOperatingExpenses();
     const totalOpExpenses = Object.values(opExpenses).reduce((a, b) => a + b, 0);
@@ -157,140 +166,253 @@ const RealEstateBusinessPlan = () => {
     const buyersUnderContract = buyerSoldConv > 0 ? buyerCount / (buyerSoldConv / 100) : 0;
     const buyerApptsNeeded = buyerApptConv > 0 ? buyersUnderContract / (buyerApptConv / 100) : 0;
 
-    // Create PDF using jsPDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    // Page 1 - Economic Model
-    doc.setFontSize(20);
-    doc.setFont(undefined, 'bold');
-    doc.text('The Economic Model', 105, 20, { align: 'center' });
-    
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Agent: ${formData.name}`, 20, 35);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text('Financial Summary', 20, 50);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Total Gross Income (GCI): $${totalGCI.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, 58);
-    doc.text(`Cost of Sales: $${costOfSales.total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, 66);
-    doc.text(`Operating Expenses: $${totalOpExpenses.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, 74);
-    doc.text(`Total Net Income: $${netIncome.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, 82);
-    
-    doc.text(`Average Commission: $${avgCommissionDollar.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, 90);
-    doc.text(`Units Sold: ${goalTrans}`, 20, 98);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text('Listing Side Breakdown', 20, 113);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Listings Sold: ${listingCount.toFixed(1)} (${listingPercent}% of total)`, 20, 121);
-    doc.text(`Listings Taken Needed: ${listingsTaken.toFixed(1)}`, 20, 129);
-    doc.text(`Conversion Rate (Taken to Sold): ${listingToSold}%`, 20, 137);
-    doc.text(`Listing Appointments Needed: ${listingApptsNeeded.toFixed(1)}`, 20, 145);
-    doc.text(`Conversion Rate (Appt to Taken): ${listingApptConv}%`, 20, 153);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text('Buyer Side Breakdown', 20, 168);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Buyers Closed: ${buyerCount.toFixed(1)} (${(100-listingPercent).toFixed(1)}% of total)`, 20, 176);
-    doc.text(`Buyers Under Contract Needed: ${buyersUnderContract.toFixed(1)}`, 20, 184);
-    doc.text(`Conversion Rate (Contract to Sold): ${buyerSoldConv}%`, 20, 192);
-    doc.text(`Buyer Appointments Needed: ${buyerApptsNeeded.toFixed(1)}`, 20, 200);
-    doc.text(`Conversion Rate (Appt to Contract): ${buyerApptConv}%`, 20, 208);
-    
-    // Page 2 - Budget Model
-    doc.addPage();
-    doc.setFontSize(20);
-    doc.setFont(undefined, 'bold');
-    doc.text('The Budget Model', 105, 20, { align: 'center' });
-    
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Agent: ${formData.name}`, 20, 35);
-    doc.text(`GCI Goal: $${totalGCI.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, 43);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text('Cost of Sales', 20, 58);
-    doc.setFont(undefined, 'normal');
-    let yPos = 66;
-    if (costOfSales.listingSpecialist > 0) {
-      doc.text(`Listing Specialist: $${costOfSales.listingSpecialist.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    if (costOfSales.buyerSpecialist > 0) {
-      doc.text(`Buyer Specialist: $${costOfSales.buyerSpecialist.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    if (costOfSales.referralFees > 0) {
-      doc.text(`Referral Fees: $${costOfSales.referralFees.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    if (costOfSales.closingGifts > 0) {
-      doc.text(`Closing Gifts: $${costOfSales.closingGifts.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    if (costOfSales.tc > 0) {
-      doc.text(`Transaction Coordinator: $${costOfSales.tc.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    if (costOfSales.kwCares > 0) {
-      doc.text(`KW Cares: $${costOfSales.kwCares.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    if (costOfSales.other > 0) {
-      doc.text(`Other Cost of Sale: $${costOfSales.other.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-      yPos += 8;
-    }
-    doc.setFont(undefined, 'bold');
-    doc.text(`Total Cost of Sales: $${costOfSales.total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, yPos);
-    
-    yPos += 15;
-    doc.text('Operating Expenses', 20, yPos);
-    doc.setFont(undefined, 'normal');
-    yPos += 8;
-    
-    const opExpenseEntries = [
-      ['Compensation/Salary', opExpenses.compensation],
-      ['Lead Generation', opExpenses.leadGen],
-      ['Occupancy', opExpenses.occupancy],
-      ['Education & Coaching', opExpenses.education],
-      ['Supplies & Office', opExpenses.supplies],
-      ['Communication & Tech', opExpenses.communication],
-      ['Auto', opExpenses.auto],
-      ['Equipment', opExpenses.equipment],
-      ['Insurance', opExpenses.insurance],
-      ['Other Expenses', opExpenses.other]
-    ];
-    
-    opExpenseEntries.forEach(([label, amount]) => {
-      if (amount > 0) {
-        doc.text(`${label}: $${amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 25, yPos);
-        yPos += 8;
-      }
-    });
-    
-    doc.setFont(undefined, 'bold');
-    doc.text(`Total Operating Expenses: $${totalOpExpenses.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, yPos);
-    
-    yPos += 15;
-    doc.setFontSize(14);
-    doc.text(`NET INCOME: $${netIncome.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, 20, yPos);
-    
-    // Save PDF
-    doc.save(`Business_Plan_${formData.name.replace(/\s+/g, '_')}.pdf`);
-    
-    // TODO: Send data to backend for storage
-    // fetch('/api/save-plan', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData)
-    // });
-    
-    alert('PDF generated successfully! To save responses to a database, you\'ll need to set up a backend service.');
-  };
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4">
+        <div className="max-w-5xl mx-auto">
+          <button
+            onClick={handleBackToForm}
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium"
+          >
+            <ArrowLeft size={20} />
+            Back to Form
+          </button>
 
-  const { avgCommissionDollar, totalGCI } = calculateValues();
+          <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
+            
+            <div className="mb-6">
+              <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+            </div>
+
+            <div className="bg-blue-50 p-6 rounded-lg mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Financial Summary</h2>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Total Gross Income (GCI):</span>
+                  <span className="font-semibold">${formatCurrency(totalGCI)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Cost of Sales:</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.total)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Operating Expenses:</span>
+                  <span className="font-semibold">${formatCurrency(totalOpExpenses)}</span>
+                </div>
+                <div className="flex justify-between pt-2 border-t-2 border-blue-200">
+                  <span className="text-gray-800 font-bold">Total Net Income:</span>
+                  <span className="font-bold text-blue-600 text-xl">${formatCurrency(netIncome)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <p className="text-gray-700">Average Commission:</p>
+                <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <p className="text-gray-700">Units Sold:</p>
+                <p className="text-2xl font-bold text-gray-800">{goalTrans}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="border-l-4 border-green-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Listing Side Breakdown</h3>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm text-gray-600">Listings Sold</p>
+                    <p className="text-lg font-semibold">{listingCount.toFixed(1)} <span className="text-sm text-gray-500">({listingPercent}% of total)</span></p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Listings Taken Needed</p>
+                    <p className="text-lg font-semibold">{listingsTaken.toFixed(1)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Conversion Rate (Taken to Sold)</p>
+                    <p className="text-lg font-semibold">{listingToSold}%</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Listing Appointments Needed</p>
+                    <p className="text-lg font-semibold">{listingApptsNeeded.toFixed(1)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Conversion Rate (Appt to Taken)</p>
+                    <p className="text-lg font-semibold">{listingApptConv}%</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-l-4 border-purple-500 pl-4">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Buyer Side Breakdown</h3>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm text-gray-600">Buyers Closed</p>
+                    <p className="text-lg font-semibold">{buyerCount.toFixed(1)} <span className="text-sm text-gray-500">({(100-listingPercent).toFixed(1)}% of total)</span></p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Buyers Under Contract Needed</p>
+                    <p className="text-lg font-semibold">{buyersUnderContract.toFixed(1)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Conversion Rate (Contract to Sold)</p>
+                    <p className="text-lg font-semibold">{buyerSoldConv}%</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Buyer Appointments Needed</p>
+                    <p className="text-lg font-semibold">{buyerApptsNeeded.toFixed(1)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Conversion Rate (Appt to Contract)</p>
+                    <p className="text-lg font-semibold">{buyerApptConv}%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-xl p-8">
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Budget Model</h1>
+            
+            <div className="mb-6">
+              <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+              <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
+            </div>
+
+            <div className="mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
+              <div className="space-y-2">
+                {costOfSales.listingSpecialist > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Listing Specialist</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+                  </div>
+                )}
+                {costOfSales.buyerSpecialist > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Buyer Specialist</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                  </div>
+                )}
+                {costOfSales.referralFees > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Referral Fees</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
+                  </div>
+                )}
+                {costOfSales.closingGifts > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Closing Gifts</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
+                  </div>
+                )}
+                {costOfSales.tc > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Transaction Coordinator</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
+                  </div>
+                )}
+                {costOfSales.kwCares > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">KW Cares</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
+                  </div>
+                )}
+                {costOfSales.other > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Other Cost of Sale</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                  <span className="text-gray-800">Total Cost of Sales</span>
+                  <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
+              <div className="space-y-2">
+                {opExpenses.compensation > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Compensation/Salary</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
+                  </div>
+                )}
+                {opExpenses.leadGen > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Lead Generation</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
+                  </div>
+                )}
+                {opExpenses.occupancy > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Occupancy</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
+                  </div>
+                )}
+                {opExpenses.education > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Education & Coaching</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
+                  </div>
+                )}
+                {opExpenses.supplies > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Supplies & Office</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
+                  </div>
+                )}
+                {opExpenses.communication > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Communication & Tech</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
+                  </div>
+                )}
+                {opExpenses.auto > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Auto</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
+                  </div>
+                )}
+                {opExpenses.equipment > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Equipment</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
+                  </div>
+                )}
+                {opExpenses.insurance > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Insurance</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
+                  </div>
+                )}
+                {opExpenses.other > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Other Expenses</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                  <span className="text-gray-800">Total Operating Expenses</span>
+                  <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl font-bold">NET INCOME</span>
+                <span className="text-3xl font-bold">${formatCurrency(netIncome)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4">
@@ -299,7 +421,6 @@ const RealEstateBusinessPlan = () => {
         <p className="text-gray-600 mb-8">Plan your year with confidence</p>
         
         <div className="space-y-6">
-          {/* Contact Information */}
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Contact Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -316,7 +437,6 @@ const RealEstateBusinessPlan = () => {
             </div>
           </section>
 
-          {/* Income Goals */}
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Income Goals</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -332,7 +452,7 @@ const RealEstateBusinessPlan = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Average Commission per Side ($)</label>
-                <input type="text" value={`$${avgCommissionDollar.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`} readOnly
+                <input type="text" value={'$' + formatCurrency(avgCommissionDollar)} readOnly
                   className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50" />
               </div>
               <div>
@@ -342,13 +462,12 @@ const RealEstateBusinessPlan = () => {
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Total GCI Goal</label>
-                <input type="text" value={`$${totalGCI.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`} readOnly
+                <input type="text" value={'$' + formatCurrency(totalGCI)} readOnly
                   className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-lg font-semibold text-blue-600" />
               </div>
             </div>
           </section>
 
-          {/* Conversion Ratios */}
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Conversion Ratios</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -380,7 +499,6 @@ const RealEstateBusinessPlan = () => {
             </div>
           </section>
 
-          {/* Specialist Costs */}
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Specialist Costs</h2>
             
@@ -436,7 +554,6 @@ const RealEstateBusinessPlan = () => {
             )}
           </section>
 
-          {/* Additional Costs */}
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Additional Transaction Costs</h2>
             
@@ -558,7 +675,6 @@ const RealEstateBusinessPlan = () => {
             )}
           </section>
 
-          {/* Operating Expenses */}
           <section>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -615,21 +731,17 @@ const RealEstateBusinessPlan = () => {
             </div>
           </section>
 
-          {/* Calculate Button */}
           <div className="flex justify-center pt-6">
             <button
-              onClick={generatePDF}
+              onClick={handleCalculate}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
             >
-              <Download size={20} />
-              Calculate & Download PDF
+              <Calculator size={20} />
+              Calculate Business Plan
             </button>
           </div>
         </div>
       </div>
-      
-      {/* Load jsPDF from CDN */}
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     </div>
   );
 };
