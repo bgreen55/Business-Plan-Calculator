@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Calculator, ArrowLeft } from 'lucide-react';
+const { useState } = React;
+const { Calculator, ArrowLeft } = lucide;
 
 const RealEstateBusinessPlan = () => {
   const [formData, setFormData] = useState({
@@ -747,3 +747,6 @@ const RealEstateBusinessPlan = () => {
 };
 
 export default RealEstateBusinessPlan;
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<RealEstateBusinessPlan />);
