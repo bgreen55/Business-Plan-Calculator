@@ -4,6 +4,7 @@ const RealEstateBusinessPlan = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    teamName: '',
     avgSalesPrice: '',
     avgCommissionPercent: '',
     goalTransactions: '',
@@ -62,9 +63,7 @@ const RealEstateBusinessPlan = () => {
     const goalTrans = parseFloat(formData.goalTransactions) || 0;
     const totalGCI = calculateValues().totalGCI;
     const listingPercent = parseFloat(formData.listingPercentage) || 0;
-    
-    //const listingCount = goalTrans * (listingPercent / 100);
-    //const buyerCount = goalTrans - listingCount;
+        
     let listingCount = goalTrans * (listingPercent / 100);
     let buyerCount = goalTrans - listingCount;
 
@@ -470,6 +469,11 @@ const RealEstateBusinessPlan = () => {
                 <input type="email" name="email" value={formData.email} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Team Name</label>
+                <input type="text" name="teamName" value={formData.teamName} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>                    
             </div>
           </section>
 
