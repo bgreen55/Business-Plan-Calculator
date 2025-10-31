@@ -39,7 +39,25 @@ const RealEstateBusinessPlan = () => {
     auto: '',
     equipment: '',
     insurance: '',
-    otherExpense: ''
+    otherExpense: '',
+  // Lead Gen Fields
+    phoneContacts: '',
+    phoneContactsMetPercent: '',
+    socialFollowers: '',
+    socialFollowersMetPercent: '',
+    databaseCount: '',
+    databaseTransactPercent: '',
+    databaseCapturePercent: '',
+    leadSource1: '',
+    leadSource2: '',
+    leadSource3: '',
+    leadSource4: '',
+    convosPerAppt: '',
+    openHouses: '',
+    clientEvents: '',
+    clientSeminars: '',
+    socialPosts: '',
+    vacationWeeks: ''
   });
 
   const [showResults, setShowResults] = useState(false);
@@ -48,11 +66,6 @@ const RealEstateBusinessPlan = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-
-  // const handleExperienceChange = (e) => {
-  //   const { value } = e.target;
-  //   setFormData((prev) = > ({...prev, experienceLevel: value,}));
-  // };
 
   const calculateValues = () => {
     const avgPrice = parseFloat(formData.avgSalesPrice) || 0;
@@ -204,8 +217,7 @@ const RealEstateBusinessPlan = () => {
     
     const goalTrans = parseFloat(formData.goalTransactions) || 0;
     const listingPercent = parseFloat(formData.listingPercentage) || 0;
-    //const listingCount = goalTrans * (listingPercent / 100);
-    //const buyerCount = goalTrans - listingCount;
+    
     let listingCount = goalTrans * (listingPercent / 100);
     let buyerCount = goalTrans - listingCount;
 
@@ -234,6 +246,47 @@ const RealEstateBusinessPlan = () => {
     const listingApptsNeeded = listingApptConv > 0 ? Math.ceil(listingsTaken / (listingApptConv / 100)) : 0;
     const buyersUnderContract = buyerSoldConv > 0 ? Math.ceil(buyerCount / (buyerSoldConv / 100)) : 0;
     const buyerApptsNeeded = buyerApptConv > 0 ? Math.ceil(buyersUnderContract / (buyerApptConv / 100)) : 0;
+
+// Lead Generation Model Calculations
+    const phoneContacts = parseFloat(formData.phoneContacts) || 0;
+    const phoneContactsMetPercent = parseFloat(formData.phoneContactsMetPercent) || 0;
+    const phoneContactsMet = Math.round(phoneContacts * (phoneContactsMetPercent / 100));
+    const phoneContactsNotMet = phoneContacts - phoneContactsMet;
+    
+    const socialFollowers = parseFloat(formData.socialFollowers) || 0;
+    const socialFollowersMetPercent = parseFloat(formData.socialFollowersMetPercent) || 0;
+    const socialFollowersMet = Math.round(socialFollowers * (socialFollowersMetPercent / 100));
+    const socialFollowersNotMet = socialFollowers - socialFollowersMet;
+    
+    const dbCount = parseFloat(formData.databaseCount) || 0;
+    const dbTransactPercent = parseFloat(formData.databaseTransactPercent) || 0;
+    const dbCapturePercent = parseFloat(formData.databaseCapturePercent) || 0;
+    const dbTransactDecimal = dbTransactPercent / 100;
+    const dbCaptureDecimal = dbCapturePercent / 100;
+    const dbOpportunity = Math.round(dbCount * dbTransactDecimal * dbCaptureDecimal);
+    
+    const denominator = dbTransactDecimal * dbCaptureDecimal;
+    const contactsNeededForGoal = denominator > 0 ? Math.ceil(goalTrans / denominator) : 0;
+    const contactsToAddThisYear = Math.max(0, contactsNeededForGoal - dbCount);
+    const contactsToAddPerMonth = (contactsToAddThisYear / 12).toFixed(1);
+    
+    const totalApptsNeeded = listingApptsNeeded + buyerApptsNeeded;
+    const convosPerAppt = parseFloat(formData.convosPerAppt) || 0;
+    const totalConvosNeeded = Math.ceil(totalApptsNeeded * convosPerAppt);
+    const totalConvosPerMonth = (totalConvosNeeded / 12).toFixed(1);
+    
+    const openHouses = parseFloat(formData.openHouses) || 0;
+    const clientEvents = parseFloat(formData.clientEvents) || 0;
+    const clientSeminars = parseFloat(formData.clientSeminars) || 0;
+    const socialPosts = parseFloat(formData.socialPosts) || 0;
+    const vacationWeeks = parseFloat(formData.vacationWeeks) || 0;
+    const workingWeeks = 52 - vacationWeeks;
+    
+    const openHousesPerMonth = (openHouses / 12).toFixed(1);
+    const clientEventsPerMonth = (clientEvents / 12).toFixed(1);
+    const clientSeminarsPerMonth = (clientSeminars / 12).toFixed(1);
+    const socialPostsPerMonth = (socialPosts / 12).toFixed(1);
+// END Lead Generation Model Calculations
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4">
@@ -483,6 +536,144 @@ const RealEstateBusinessPlan = () => {
               </div>
             </div>
           </div>
+
+          {/* Lead Generation Card */}
+          <div className="bg-white rounded-lg shadow-xl p-8">
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>
+
+            <div className="mb-6">
+              <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+              {formData.teamName && (
+                <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {/* Contacts & Database */}
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Database & Contacts</h2>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Contacts in your phone:</span>
+                    <span className="font-semibold">{phoneContacts}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Contacts Met:</span>
+                    <span className="font-semibold">{phoneContactsMet}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Contacts Haven't Met:</span>
+                    <span className="font-semibold">{phoneContactsNotMet}</span>
+                  </div>
+                  <div className="flex justify-between pt-2 mt-2 border-t">
+                    <span className="text-gray-700">Social Connects:</span>
+                    <span className="font-semibold">{socialFollowers}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Social Connects Met:</span>
+                    <span className="font-semibold">{socialFollowersMet}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Social Connections Not Met:</span>
+                    <span className="font-semibold">{socialFollowersNotMet}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Database Opportunity */}
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <h2 className="text-xl font-bold text-blue-800 mb-4">Database Opportunity</h2>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700"># in your database:</span>
+                    <span className="font-semibold">{dbCount}</span>
+                  </div>
+                  <div className="text-center mt-4">
+                    <p className="text-sm text-gray-600">{dbCount} contacts &times; {dbTransactPercent}% transact &times; {dbCapturePercent}% captured</p>
+                    <p className="text-gray-700 mt-1">Opportunity in Database Right Now:</p>
+                    <p className="text-3xl font-bold text-blue-600">{dbOpportunity} <span className="text-xl">Units</span></p>
+                  </div>
+                  <div className="text-center mt-4 pt-4 border-t">
+                    <p className="text-sm text-gray-600">{goalTrans} units / ({dbTransactPercent}% &times; {dbCapturePercent}%)</p>
+                    <p className="text-gray-700 mt-1">Total Contacts Needed for Goal:</p>
+                    <p className="text-2xl font-bold text-gray-800">{contactsNeededForGoal}</p>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <span className="text-gray-700">Contacts to Add This Year:</span>
+                    <span className="font-semibold">{contactsToAddThisYear}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Contacts to Add Each Month:</span>
+                    <span className="font-semibold">{contactsToAddPerMonth}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            {/* Conversations & Lead Sources */}
+            <div className="mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Conversations & Lead Sources</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-700 mb-3">Top 4 Lead Sources</h3>
+                  <ol className="list-decimal list-inside space-y-2">
+                    {formData.leadSource1 && <li className="text-gray-700">{formData.leadSource1}</li>}
+                    {formData.leadSource2 && <li className="text-gray-700">{formData.leadSource2}</li>}
+                    {formData.leadSource3 && <li className="text-gray-700">{formData.leadSource3}</li>}
+                    {formData.leadSource4 && <li className="text-gray-700">{formData.leadSource4}</li>}
+                  </ol>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Total Appointments Needed:</span>
+                    <span className="font-semibold text-lg">{totalApptsNeeded}</span>
+                  </div>
+                  <div className="text-center mt-4">
+                    <p className="text-sm text-gray-600">{totalApptsNeeded} appts &times; {convosPerAppt} conversations per appt</p>
+                    <p className="text-gray-700 mt-1">Total Conversations Needed (Annual):</p>
+                    <p className="text-3xl font-bold text-blue-600">{totalConvosNeeded}</p>
+                  </div>
+                  <div className="flex justify-between mt-2 pt-2 border-t">
+                    <span className="text-gray-700">Conversations Needed (Monthly):</span>
+                    <span className="font-semibold text-lg">{totalConvosPerMonth}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Activity Goals */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Activity Goals</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Open Houses</p>
+                  <p className="text-2xl font-bold text-gray-800">{openHouses}</p>
+                  <p className="text-sm text-gray-600">{openHousesPerMonth}/mo</p>
+                </div>
+                <div className="text-center bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Client Events</p>
+                  <p className="text-2xl font-bold text-gray-800">{clientEvents}</p>
+                  <p className="text-sm text-gray-600">{clientEventsPerMonth}/mo</p>
+                </div>
+                <div className="text-center bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Client Seminars</p>
+                  <p className="text-2xl font-bold text-gray-800">{clientSeminars}</p>
+                  <p className="text-sm text-gray-600">{clientSeminarsPerMonth}/mo</p>
+                </div>
+                <div className="text-center bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Social Posts</p>
+                  <p className="text-2xl font-bold text-gray-800">{socialPosts}</p>
+                  <p className="text-sm text-gray-600">{socialPostsPerMonth}/mo</p>
+                </div>
+              </div>
+              <div className="text-center mt-6">
+                <p className="text-lg text-gray-700">Planning for <span className="font-bold text-blue-600">{workingWeeks}</span> working weeks</p>
+              </div>
+            </div>
+          </div>
+          {/* END: Add this new output card */}                  
+                
         </div>
       </div>
     );
@@ -838,6 +1029,102 @@ const RealEstateBusinessPlan = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Other Expense ($)</label>
                 <input type="number" name="otherExpense" value={formData.otherExpense} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+            </div>
+          </section>
+
+    //Lead Generation Model Input
+          <section>
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Lead Generation Model</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1"># in your phone contacts</label>
+                <input type="number" name="phoneContacts" value={formData.phoneContacts} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">% of phone contacts you have MET</label>
+                <input type="number" name="phoneContactsMetPercent" value={formData.phoneContactsMetPercent} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1"># followers (FB/Insta)</label>
+                <input type="number" name="socialFollowers" value={formData.socialFollowers} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">% of social connections you have MET</label>
+                <input type="number" name="socialFollowersMetPercent" value={formData.socialFollowersMetPercent} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1"># in your Database</label>
+                <input type="number" name="databaseCount" value={formData.databaseCount} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">% of Database that will transact this year</label>
+                <input type="number" name="databaseTransactPercent" value={formData.databaseTransactPercent} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">% of Database transactions you will capture</label>
+                <input type="number" name="databaseCapturePercent" value={formData.databaseCapturePercent} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Conversations per Appointment</label>
+                <input type="number" name="convosPerAppt" value={formData.convosPerAppt} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">#1 Lead Source</label>
+                <input type="text" name="leadSource1" value={formData.leadSource1} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">#2 Lead Source</label>
+                <input type="text" name="leadSource2" value={formData.leadSource2} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">#3 Lead Source</label>
+                <input type="text" name="leadSource3" value={formData.leadSource3} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">#4 Lead Source</label>
+                <input type="text" name="leadSource4" value={formData.leadSource4} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Open Houses/yr</label>
+                <input type="number" name="openHouses" value={formData.openHouses} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Client Events/yr</label>
+                <input type="number" name="clientEvents" value={formData.clientEvents} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Client Seminars/yr</label>
+                <input type="number" name="clientSeminars" value={formData.clientSeminars} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Social Posts/yr</label>
+                <input type="number" name="socialPosts" value={formData.socialPosts} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Vacation Weeks/yr</label>
+                <input type="number" name="vacationWeeks" value={formData.vacationWeeks} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
