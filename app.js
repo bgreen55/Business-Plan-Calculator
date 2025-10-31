@@ -194,6 +194,77 @@ const RealEstateBusinessPlan = () => {
     };
   };
 
+  const getRecommendedPercentages = (gci) => {
+    // This data is loaded from the CSV file you provided
+    const model_data = {
+      // Cost of Sales
+      "Listing Specialist": {"$150,000-$339,999":0.0,"$340,000-$640,000":3.1,"$640,001-$970,000":3.1,"$970,001-$1,600,000":4.5,"$1,600,001-$3,400,000":5.0},
+      "Buyer Specialist": {"$150,000-$339,999":0.0,"$340,000-$640,000":15.0,"$640,001-$970,000":20.0,"$970,001-$1,600,000":25.0,"$1,600,001-$3,400,000":25.0},
+      "Other COS": {"$150,000-$339,999":11.0,"$340,000-$640,000":7.0,"$640,001-$970,000":6.0,"$970,001-$1,600,000":5.0,"$1,600,001-$3,400,000":4.0},
+      // Operating Expenses
+      "Compensation": {"$150,000-$339,999":5.0,"$340,000-$640,000":9.8,"$640,001-$970,000":14.1,"$970,001-$1,600,000":14.0,"$1,600,001-$3,400,000":14.6},
+      "Lead Generation": {"$150,000-$339,999":10.0,"$340,000-$640,000":7.1,"$640,001-$970,000":9.1,"$970,001-$1,600,000":8.3,"$1,600,001-$3,400,000":8.0},
+      "Occupancy": {"$150,000-$339,999":0.0,"$340,000-$640,000":1.9,"$640,001-$970,000":1.9,"$970,001-$1,600,000":2.0,"$1,600,001-$3,400,000":2.0},
+      "Education and Coaching": {"$150,000-$339,999":10.0,"$340,000-$640,000":5.3,"$640,001-$970,000":5.0,"$970,001-$1,600,000":4.5,"$1,600,001-$3,400,000":4.0},
+      "Supplies/Office Expenses": {"$150,000-$339,999":2.5,"$340,000-$640,000":2.2,"$640,001-$970,000":2.0,"$970,001-$1,600,000":2.0,"$1,600,001-$3,400,000":1.7},
+      "Communication and Tech": {"$150,000-$339,999":3.7,"$340,000-$640,000":2.6,"$640,001-$970,000":2.6,"$970,001-$1,600,000":2.5,"$1,600,001-$3,400,000":2.3},
+      "Auto": {"$150,000-$339,999":3.0,"$340,000-$640,000":1.8,"$640,001-$970,000":1.8,"$970,001-$1,600,000":1.8,"$1,600,001-$3,400,000":1.0},
+      "Equipment": {"$150,000-$339,999":0.7,"$340,000-$640,000":0.4,"$640,001-$970,000":0.4,"$970,001-$1,600,000":0.4,"$1,600,001-$3,400,000":0.4},
+      "Insurance": {"$150,000-$339,999":1.6,"$340,000-$640,000":0.7,"$640,001-$970,000":0.7,"$970,001-$1,600,000":0.5,"$1,600,001-$3,400,000":0.5},
+      "Other Expense": {"$150,000-$339,999":3.5,"$340,000-$640,000":3.0,"$640,001-$970,000":2.5,"$970,001-$1,600,000":2.5,"$1,600,001-$3,400,000":2.0}
+    };
+    
+    const sorted_gci_bounds = [["$1,600,001-$3,400,000", 1600001], ["$970,001-$1,600,000", 970001], ["$640,001-$970,000", 640001], ["$340,000-$640,000", 340000], ["$150,000-$339,999", 150000]];
+    
+    // This map connects your CSV categories to your code's state keys
+    const csv_to_code_map = {
+      // Cost of Sales
+      "Listing Specialist": "listingSpecialist",
+      "Buyer Specialist": "buyerSpecialist",
+      "Other COS": "otherCOS",
+      // Operating Expenses
+      "Compensation": "compensation", 
+      "Lead Generation": "leadGen", 
+      "Occupancy": "occupancy", 
+      "Education and Coaching": "education", 
+      "Supplies/Office Expenses": "supplies", 
+      "Communication and Tech": "communication", 
+      "Auto": "auto", 
+      "Equipment": "equipment", 
+      "Insurance": "insurance", 
+      "Other Expense": "other"
+    };
+
+    let selectedGciBracket = sorted_gci_bounds[sorted_gci_bounds.length - 1][0]; // Default to the lowest bracket
+    
+    for (const [bracketName, lowerBound] of sorted_gci_bounds) {
+      if (gci >= lowerBound) {
+        selectedGciBracket = bracketName;
+        break;
+      }
+    }
+    
+    if (gci < sorted_gci_bounds[sorted_gci_bounds.length - 1][1]) {
+       selectedGciBracket = sorted_gci_bounds[sorted_gci_bounds.length - 1][0];
+    }
+    
+    let recs = {};
+    
+    for (const [csvCategory, codeKey] of Object.entries(csv_to_code_map)) {
+      if (model_data[csvCategory]) {
+        recs[codeKey] = model_data[csvCategory][selectedGciBracket];
+      } else {
+        recs[codeKey] = 0; // Default to 0 if category not in data
+      }
+    }
+    
+    return recs;
+  };
+
+  const formatPercent = (value) => {
+    return value.toFixed(1) + '%';
+  };
+
   const formatCurrency = (value) => {
     return value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   };
@@ -213,6 +284,29 @@ const RealEstateBusinessPlan = () => {
     const costOfSales = calculateCostOfSales();
     const opExpenses = calculateOperatingExpenses();
     const totalOpExpenses = Object.values(opExpenses).reduce((a, b) => a + b, 0);
+
+    // This sums up all your other costs to match the model's "Other COS" category
+    const otherCOSSum = costOfSales.referralFees + costOfSales.closingGifts + costOfSales.tc + costOfSales.kwCares + costOfSales.other;
+    
+    const recommendedPercentages = getRecommendedPercentages(totalGCI);
+    const actualPercentages = {
+      // Cost of Sales
+      listingSpecialist: totalGCI > 0 ? (costOfSales.listingSpecialist / totalGCI) * 100 : 0,
+      buyerSpecialist: totalGCI > 0 ? (costOfSales.buyerSpecialist / totalGCI) * 100 : 0,
+      otherCOS: totalGCI > 0 ? (otherCOSSum / totalGCI) * 100 : 0,
+      //Operating Expenses
+      compensation: totalGCI > 0 ? (opExpenses.compensation / totalGCI) * 100 : 0,
+      leadGen: totalGCI > 0 ? (opExpenses.leadGen / totalGCI) * 100 : 0,
+      occupancy: totalGCI > 0 ? (opExpenses.occupancy / totalGCI) * 100 : 0,
+      education: totalGCI > 0 ? (opExpenses.education / totalGCI) * 100 : 0,
+      supplies: totalGCI > 0 ? (opExpenses.supplies / totalGCI) * 100 : 0,
+      communication: totalGCI > 0 ? (opExpenses.communication / totalGCI) * 100 : 0,
+      auto: totalGCI > 0 ? (opExpenses.auto / totalGCI) * 100 : 0,
+      equipment: totalGCI > 0 ? (opExpenses.equipment / totalGCI) * 100 : 0,
+      insurance: totalGCI > 0 ? (opExpenses.insurance / totalGCI) * 100 : 0,
+      other: totalGCI > 0 ? (opExpenses.other / totalGCI) * 100 : 0,
+    };
+    
     const netIncome = totalGCI - costOfSales.total - totalOpExpenses;
     
     const goalTrans = parseFloat(formData.goalTransactions) || 0;
@@ -543,18 +637,35 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
 
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
-                <div className="space-y-2">
-                  {costOfSales.listingSpecialist > 0 && (
-                    <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Listing Specialist</span>
-                      <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
-                    </div>
-                  )}
-                  {costOfSales.buyerSpecialist > 0 && (
-               <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Buyer Specialist</span>
-                      <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
-                    </div>
+                <div className="flex justify-between py-1 text-sm font-semibold text-gray-600 border-b print:hidden">
+                <span>Category</span>
+                <div className="flex gap-4 w-1/2 justify-end">
+                  <span className="w-28 text-right">Your Budget</span>
+                  <span className="w-20 text-right">Actual %</span>
+                  <span className="w-20 text-right">Rec. %</span>
+                </div>
+              </div>
+
+              {/* --- NEW EXPENSE LIST --- */}
+              <div className="space-y-2">
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Listing Specialist</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.listingSpecialist)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.listingSpecialist)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+       <span className="text-gray-700">Buyer Specialist</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.buyerSpecialist)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.buyerSpecialist)}</span>
+                  </div>
+                </div>
                   )}
            {costOfSales.referralFees > 0 && (
                     <div className="flex justify-between py-2">
