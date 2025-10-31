@@ -514,7 +514,7 @@ const RealEstateBusinessPlan = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div> 
               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 mt-3">Experience Level</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Experience Level</label>
                   <select name="experienceLevel" value={formData.experienceLevel || ""} onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
@@ -575,7 +575,7 @@ const RealEstateBusinessPlan = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">% of Transactions That Will Be Listings</label>
-                <input type="number" step="0.01" name="listingPercentage" value={formData.listingPercentage} onChange={handleChange}
+                <input type="number" step="0.01" name="listingPercentage" value={formData.listingPercentage} onChange={handleChange} placeholder={"Goal is 50%"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
