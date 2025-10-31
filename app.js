@@ -83,8 +83,9 @@ const RealEstateBusinessPlan = () => {
 
     if (formData.payBuyerSpecialist === 'yes') {
       const bsPercent = parseFloat(formData.buyerSpecialistPercent) || 0;
-      const bsCommission = parseFloat(formData.buyerSpecialistCommission) || 0;
-      costs.buyerSpecialist = buyerCount * (bsPercent / 100) * bsCommission;
+      const bsCommissionPercent = parseFloat(formData.buyerSpecialistCommission) || 0;
+      const avgComm = calculateValues().avgCommissionDollar;
+      costs.buyerSpecialist = buyerCount * (bsPercent / 100) * avgComm * (bsCommissionPercent / 100);
     }
 
     if (formData.hasReferralFees === 'yes') {
@@ -95,7 +96,8 @@ const RealEstateBusinessPlan = () => {
     }
 
     if (formData.providesClosingGifts === 'yes') {
-      costs.closingGifts = parseFloat(formData.closingGiftBudget) || 0;
+      const perGift = parseFloat(formData.closingGiftBudget) || 0;
+      costs.closingGifts = perGift * goalTrans;
     }
 
     if (formData.payTC === 'yes') {
@@ -160,10 +162,10 @@ const RealEstateBusinessPlan = () => {
     const buyerSoldConv = parseFloat(formData.buyerSoldConversion) || 0;
     const buyerApptConv = parseFloat(formData.buyerApptConversion) || 0;
     
-    const listingsTaken = listingToSold > 0 ? listingCount / (listingToSold / 100) : 0;
-    const listingApptsNeeded = listingApptConv > 0 ? listingsTaken / (listingApptConv / 100) : 0;
-    const buyersUnderContract = buyerSoldConv > 0 ? buyerCount / (buyerSoldConv / 100) : 0;
-    const buyerApptsNeeded = buyerApptConv > 0 ? buyersUnderContract / (buyerApptConv / 100) : 0;
+    const listingsTaken = listingToSold > 0 ? Math.ceil(listingCount / (listingToSold / 100)) : 0;
+    const listingApptsNeeded = listingApptConv > 0 ? Math.ceil(listingsTaken / (listingApptConv / 100)) : 0;
+    const buyersUnderContract = buyerSoldConv > 0 ? Math.ceil(buyerCount / (buyerSoldConv / 100)) : 0;
+    const buyerApptsNeeded = buyerApptConv > 0 ? Math.ceil(buyersUnderContract / (buyerApptConv / 100)) : 0;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4">
@@ -221,11 +223,11 @@ const RealEstateBusinessPlan = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm text-gray-600">Listings Sold</p>
-                    <p className="text-lg font-semibold">{listingCount.toFixed(1)} <span className="text-sm text-gray-500">({listingPercent}% of total)</span></p>
+                    <p className="text-lg font-semibold">{listingCount} <span className="text-sm text-gray-500">({listingPercent}% of total)</span></p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Listings Taken Needed</p>
-                    <p className="text-lg font-semibold">{listingsTaken.toFixed(1)}</p>
+                    <p className="text-lg font-semibold">{listingsTaken}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Conversion Rate (Taken to Sold)</p>
@@ -233,7 +235,7 @@ const RealEstateBusinessPlan = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Listing Appointments Needed</p>
-                    <p className="text-lg font-semibold">{listingApptsNeeded.toFixed(1)}</p>
+                    <p className="text-lg font-semibold">{listingApptsNeeded}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Conversion Rate (Appt to Taken)</p>
@@ -247,11 +249,11 @@ const RealEstateBusinessPlan = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm text-gray-600">Buyers Closed</p>
-                    <p className="text-lg font-semibold">{buyerCount.toFixed(1)} <span className="text-sm text-gray-500">({(100-listingPercent).toFixed(1)}% of total)</span></p>
+                    <p className="text-lg font-semibold">{buyerCount} <span className="text-sm text-gray-500">({(100-listingPercent).toFixed(1)}% of total)</span></p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Buyers Under Contract Needed</p>
-                    <p className="text-lg font-semibold">{buyersUnderContract.toFixed(1)}</p>
+                    <p className="text-lg font-semibold">{buyersUnderContract}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Conversion Rate (Contract to Sold)</p>
@@ -259,7 +261,7 @@ const RealEstateBusinessPlan = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Buyer Appointments Needed</p>
-                    <p className="text-lg font-semibold">{buyerApptsNeeded.toFixed(1)}</p>
+                    <p className="text-lg font-semibold">{buyerApptsNeeded}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Conversion Rate (Appt to Contract)</p>
@@ -544,8 +546,15 @@ const RealEstateBusinessPlan = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What do you pay buy side specialists? ($)</label>
-                  <input type="number" name="buyerSpecialistCommission" value={formData.buyerSpecialistCommission} onChange={handleChange}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of the commission do you pay buy side specialists?</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="buyerSpecialistCommission"
+                    value={formData.buyerSpecialistCommission}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
               </div>
