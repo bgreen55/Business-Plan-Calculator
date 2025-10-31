@@ -723,7 +723,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
 
                 <div className="flex justify-between py-2 items-center">
                   <span className="text-gray-700">Occupancy</span>
-                  <div className="flex gap-4 w-1/Example-Code/Example-Code/2 justify-end">
+                  <div className="flex gap-4 w-1/2 justify-end">
                     <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
                     <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.occupancy)}</span>
                     <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.occupancy)}</span>
