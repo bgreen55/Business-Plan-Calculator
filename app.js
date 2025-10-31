@@ -515,7 +515,7 @@ const RealEstateBusinessPlan = () => {
               </div> 
               <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1 mt-3">Experience Level</label>
-                  <select name="experienceLevel" value={formData.experienceLevel || ""} onChange="{handleExperienceChange}
+                  <select name="experienceLevel" value={formData.experienceLevel || ""} onChange="{handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Experience Level</option>
