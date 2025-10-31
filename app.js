@@ -63,8 +63,26 @@ const RealEstateBusinessPlan = () => {
     const totalGCI = calculateValues().totalGCI;
     const listingPercent = parseFloat(formData.listingPercentage) || 0;
     
-    const listingCount = goalTrans * (listingPercent / 100);
-    const buyerCount = goalTrans - listingCount;
+    //const listingCount = goalTrans * (listingPercent / 100);
+    //const buyerCount = goalTrans - listingCount;
+    let listingCount = goalTrans * (listingPercent / 100);
+    let buyerCount = goalTrans - listingCount;
+
+    const isTieBreaker = (listingCount % 1 === 0.5) && (buyerCount % 1 === 0.5);
+
+    if (isTieBreaker) {
+      listingCount = Math.ceil(listingCount);
+      buyerCount = Math.floor(buyerCount);
+    } else {
+      listingCount = Math.round(listingCount);
+      buyerCount = Math.round(buyerCount);
+    }
+
+    const currentTotal = listingCount + buyerCount;
+    if (currentTotal !== goalTrans) {
+      const difference = goalTrans - currentTotal;
+      buyerCount += difference;
+    }
     
     let costs = {
       listingSpecialist: 0,
@@ -555,7 +573,6 @@ const RealEstateBusinessPlan = () => {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
               </div>
             )}
