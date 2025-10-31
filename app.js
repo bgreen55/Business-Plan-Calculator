@@ -49,10 +49,10 @@ const RealEstateBusinessPlan = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleExperienceChange = (e) => {
-    const { value } = e.target;
-    setFormData((prev) = > ({...prev, experienceLevel: value,}));
-  };
+  // const handleExperienceChange = (e) => {
+  //   const { value } = e.target;
+  //   setFormData((prev) = > ({...prev, experienceLevel: value,}));
+  // };
 
   const calculateValues = () => {
     const avgPrice = parseFloat(formData.avgSalesPrice) || 0;
