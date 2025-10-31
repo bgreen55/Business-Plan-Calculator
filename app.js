@@ -687,65 +687,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
               
 
-              {/* --- NEW EXPENSE LIST --- */}
-              <div className="space-y-2">
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Listing Specialist</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.listingSpecialist)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.listingSpecialist)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-       <span className="text-gray-700">Buyer Specialist</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.buyerSpecialist)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.buyerSpecialist)}</span>
-                  </div>
-                </div>
-                  )}
-           {costOfSales.referralFees > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Referral Fees</span>
-                      <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
-                    </div>
-             )}
-                  {costOfSales.closingGifts > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Closing Gifts</span>
-                      <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
-               </div>
-                  )}
-                  {costOfSales.tc > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Transaction Coordinator</span>
-              <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
-                    </div>
-                  )}
-                  {costOfSales.kwCares > 0 && (
-                    <div className="flex justify-between py-2">
-          <span className="text-gray-700">KW Cares</span>
-                      <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
-                    </div>
-                  )}
-                  {costOfSales.other > 0 && (
-     <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Other Cost of Sale</span>
-                      <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
-                    </div>
-                  )}
-   <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                    <span className="text-gray-800">Total Cost of Sales</span>
-                    <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
-                  </div>
-                </div>
-              </div>
-
-    <div className="mb-8">
+        <div className="mb-8">
               <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
               
               {/* --- HEADER ROW --- */}
