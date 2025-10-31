@@ -310,27 +310,64 @@ const RealEstateBusinessPlan = () => {
                 padding: 0 !important;
                 margin: 0 !important;
                 max-width: 100% !important;
+                font-size: 14px; /* Set a smaller base font for print */
               }
 
-              /* Reset all cards for printing (remove shadows, etc.) */
-              .results-container .bg-white {
-                background: #fff !important;
-                box-shadow: none !important;
-                border: 1px solid #eee;
-                margin-bottom: 0;
-              }
-              
-              /* --- This is the page break magic --- */
-              
-              /* Force a page break BEFORE the budget model */
+              /* --- Page Break Rules --- */
               .budget-model-card {
                 page-break-before: always;
               }
               
-              /* Force a page break BEFORE the lead gen model */
               .lead-gen-model-card {
                 page-break-before: always;
               }
+
+              /* --- NEW STYLES TO FIT CONTENT --- */
+              
+              /* Style all 3 cards for printing */
+              .print-card {
+                background: #fff !important;
+                box-shadow: none !important;
+                border: 1px solid #eee !important;
+                margin-bottom: 0 !important;
+                padding: 1.5rem !important; /* REDUCED PADDING */
+                page-break-inside: avoid; /* Try to keep card content together */
+              }
+
+              /* Reduce heading sizes */
+              .print-card h1 {
+                font-size: 24px !important;
+                margin-bottom: 1.5rem !important;
+              }
+              .print-card h2 {
+                font-size: 18px !important;
+                margin-bottom: 1rem !important;
+              }
+              .print-card h3 {
+                font-size: 16px !important;
+                margin-bottom: 0.75rem !important;
+              }
+
+              /* Reduce text sizes */
+              .print-card p, .print-card span, .print-card li {
+                font-size: 13px !important; /* Small but legible */
+              }
+              
+              /* Target specific large text elements */
+              .print-card .text-3xl { font-size: 22px !important; }
+              .print-card .text-2xl { font-size: 18px !important; }
+              .print-card .text-xl { font-size: 16px !important; }
+              .print-card .text-lg { font-size: 15px !important; }
+
+              /* Reduce spacing */
+              .print-card .space-y-2 { gap: 0.25rem !important; }
+              .print-card .space-y-3 { gap: 0.5rem !important; }
+              .print-card .py-2 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+              .print-card .p-6 { padding: 1rem !important; }
+              .print-card .p-4 { padding: 0.75rem !important; }
+              .print-card .mb-8 { margin-bottom: 1.5rem !important; }
+              .print-card .mb-6 { margin-bottom: 1rem !important; }
+              .print-card .gap-8 { gap: 1rem !important; }
             }
           `}
         </style>
@@ -358,7 +395,7 @@ const RealEstateBusinessPlan = () => {
             </div>
 
             {/* The Economic Model Card */}
-            <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
+            <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
               <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
               
               <div className="mb-6">
@@ -457,8 +494,8 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
             </div>
 
-            {/* The Budget Model Card - ADD 'budget-model-card' AND 'mb-8' CLASS */}
-            <div className="bg-white rounded-lg shadow-xl p-8 mb-8 budget-model-card">
+            {/* The Budget Model Card */}
+            <div className="bg-white rounded-lg shadow-xl p-8 mb-8 budget-model-card print-card">
               <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Budget Model</h1>
               
      <div className="mb-6">
@@ -599,8 +636,8 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
             </div>
 
-            {/* NEW LEAD GEN MODEL CARD - ADD 'lead-gen-model-card' CLASS */}
-            <div className="bg-white rounded-lg shadow-xl p-8 lead-gen-model-card">
+            {/* NEW LEAD GEN MODEL CARD */}
+            <div className="bg-white rounded-lg shadow-xl p-8 lead-gen-model-card print-card">
               <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>
 
               <div className="mb-6">
