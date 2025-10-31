@@ -289,399 +289,462 @@ const RealEstateBusinessPlan = () => {
 // END Lead Generation Model Calculations
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4">
-        <div className="max-w-5xl mx-auto">
-          <button
-            onClick={handleBackToForm}
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium"
-          >
-            <span>← Back to Form</span>
-          </button>
+      <>
+        {/* ADD THIS STYLE BLOCK */}
+        <style>
+          {`
+            @media print {
+              /* Hide elements tagged with .no-print */
+              .no-print {
+                display: none !important;
+              }
+              
+              /* Hide the entire form when printing */
+              .form-container {
+                display: none !important;
+              }
 
-          <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
+              /* Reset the results container for printing */
+              .results-container {
+                background: #fff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+              }
+
+              /* Reset all cards for printing (remove shadows, etc.) */
+              .results-container .bg-white {
+                background: #fff !important;
+                box-shadow: none !important;
+                border: 1px solid #eee;
+                margin-bottom: 0;
+              }
+              
+              /* --- This is the page break magic --- */
+              
+              /* Force a page break BEFORE the budget model */
+              .budget-model-card {
+                page-break-before: always;
+              }
+              
+              /* Force a page break BEFORE the lead gen model */
+              .lead-gen-model-card {
+                page-break-before: always;
+              }
+            }
+          `}
+        </style>
+        
+        {/* ADD 'results-container' CLASS HERE */}
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4 results-container">
+          <div className="max-w-5xl mx-auto">
             
-            <div className="mb-6">
-              <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
-              {formData.teamName && (
+            {/* THIS SECTION IS UPDATED */}
+            <div className="flex justify-between items-center mb-6 no-print">
+              <button
+                onClick={handleBackToForm}
+                className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium" 
+              >
+         <span>← Back to Form</span>
+              </button>
+              
+              {/* ADD THIS NEW PRINT BUTTON */}
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-colors duration-200"
+              >
+                <span>🖨️ Print / Save as PDF</span>
+              </button>
+            </div>
+
+            {/* The Economic Model Card */}
+            <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
+              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
+              
+              <div className="mb-6">
+                <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+                {formData.teamName && (
                 <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
-              )}
-            </div>
-           
-            <div className="bg-blue-50 p-6 rounded-lg mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Financial Summary</h2>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Total Gross Income (GCI):</span>
-                  <span className="font-semibold">${formatCurrency(totalGCI)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Cost of Sales:</span>
-                  <span className="font-semibold">${formatCurrency(costOfSales.total)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Operating Expenses:</span>
-                  <span className="font-semibold">${formatCurrency(totalOpExpenses)}</span>
-                </div>
-                <div className="flex justify-between pt-2 border-t-2 border-blue-200">
-                  <span className="text-gray-800 font-bold">Total Net Income:</span>
-                  <span className="font-bold text-blue-600 text-xl">${formatCurrency(netIncome)}</span>
-                </div>
+                )}
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700">Average Commission:</p>
-                <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700">Units Sold:</p>
-                <p className="text-2xl font-bold text-gray-800">{goalTrans}</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="border-l-4 border-green-500 pl-4">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">Listing Side Breakdown</h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm text-gray-600">Listings Sold</p>
-                    <p className="text-lg font-semibold">{listingCount} <span className="text-sm text-gray-500">({listingPercent}% of total)</span></p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Listings Taken Needed</p>
-                    <p className="text-lg font-semibold">{listingsTaken}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Conversion Rate (Taken to Sold)</p>
-                    <p className="text-lg font-semibold">{listingToSold}%</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Listing Appointments Needed</p>
-                    <p className="text-lg font-semibold">{listingApptsNeeded}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Conversion Rate (Appt to Taken)</p>
-                    <p className="text-lg font-semibold">{listingApptConv}%</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-l-4 border-purple-500 pl-4">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">Buyer Side Breakdown</h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm text-gray-600">Buyers Closed</p>
-                    <p className="text-lg font-semibold">{buyerCount} <span className="text-sm text-gray-500">({(100-listingPercent).toFixed(1)}% of total)</span></p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Buyers Under Contract Needed</p>
-                    <p className="text-lg font-semibold">{buyersUnderContract}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Conversion Rate (Contract to Sold)</p>
-                    <p className="text-lg font-semibold">{buyerSoldConv}%</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Buyer Appointments Needed</p>
-                    <p className="text-lg font-semibold">{buyerApptsNeeded}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Conversion Rate (Appt to Contract)</p>
-                    <p className="text-lg font-semibold">{buyerApptConv}%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-    {/* The Budget Model */}
-          <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Budget Model</h1>
             
-            <div className="mb-6">
-              <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
-              {formData.teamName && (
-                <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
-              )}
-              <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
-              <div className="space-y-2">
-                {costOfSales.listingSpecialist > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Listing Specialist</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+              <div className="bg-blue-50 p-6 rounded-lg mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Financial Summary</h2>
+       <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Total Gross Income (GCI):</span>
+                    <span className="font-semibold">${formatCurrency(totalGCI)}</span>
                   </div>
-                )}
-                {costOfSales.buyerSpecialist > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Buyer Specialist</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                  <div className="flex justify-between">
+                   <span className="text-gray-700">Cost of Sales:</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.total)}</span>
                   </div>
-                )}
-                {costOfSales.referralFees > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Referral Fees</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Operating Expenses:</span>
+             <span className="font-semibold">${formatCurrency(totalOpExpenses)}</span>
                   </div>
-                )}
-                {costOfSales.closingGifts > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Closing Gifts</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
-                  </div>
-                )}
-                {costOfSales.tc > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Transaction Coordinator</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
-                  </div>
-                )}
-                {costOfSales.kwCares > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">KW Cares</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
-                  </div>
-                )}
-                {costOfSales.other > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Other Cost of Sale</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                  <span className="text-gray-800">Total Cost of Sales</span>
-                  <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
-              <div className="space-y-2">
-                {opExpenses.compensation > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Compensation/Salary</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
-                  </div>
-                )}
-                {opExpenses.leadGen > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Lead Generation</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
-                  </div>
-                )}
-                {opExpenses.occupancy > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Occupancy</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
-                  </div>
-                )}
-                {opExpenses.education > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Education & Coaching</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
-                  </div>
-                )}
-                {opExpenses.supplies > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Supplies & Office</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
-                  </div>
-                )}
-                {opExpenses.communication > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Communication & Tech</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
-                  </div>
-                )}
-                {opExpenses.auto > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Auto</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
-                  </div>
-                )}
-                {opExpenses.equipment > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Equipment</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
-                  </div>
-                )}
-                {opExpenses.insurance > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Insurance</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
-                  </div>
-                )}
-                {opExpenses.other > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Other Expenses</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                  <span className="text-gray-800">Total Operating Expenses</span>
-                  <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold">NET INCOME</span>
-                <span className="text-3xl font-bold">${formatCurrency(netIncome)}</span>
-              </div>
-            </div>
+                  <div className="flex justify-between pt-2 border-t-2 border-blue-200">
+                    <span className="text-gray-800 font-bold">Total Net Income:</span>
+                    <span className="font-bold text-blue-600 text-xl">${formatCurrency(netIncome)}</span>
           </div>
-
-   {/* Lead Generation Card */}
-          <div className="bg-white rounded-lg shadow-xl p-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>
-
-            <div className="mb-6">
-              <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
-              {formData.teamName && (
-                <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {/* Contacts & Database */}
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">Database & Contacts</h2>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Contacts in your phone:</span>
-                    <span className="font-semibold">{phoneContacts}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Contacts Met:</span>
-                    <span className="font-semibold">{phoneContactsMet}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Contacts Haven't Met:</span>
-                    <span className="font-semibold">{phoneContactsNotMet}</span>
-                  </div>
-                  <div className="flex justify-between pt-2 mt-2 border-t">
-                    <span className="text-gray-700">Social Connects:</span>
-                    <span className="font-semibold">{socialFollowers}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Social Connects Met:</span>
-                    <span className="font-semibold">{socialFollowersMet}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Social Connections Not Met:</span>
-                    <span className="font-semibold">{socialFollowersNotMet}</span>
-                  </div>
                 </div>
               </div>
 
-              {/* Database Opportunity */}
-              <div className="bg-blue-50 p-6 rounded-lg">
-                <h2 className="text-xl font-bold text-blue-800 mb-4">Database Opportunity</h2>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-700"># in your database:</span>
-                    <span className="font-semibold">{dbCount}</span>
-                  </div>
-                  <div className="text-center mt-4">
-                    <p className="text-sm text-gray-600">{dbCount} contacts &times; {dbTransactPercent}% transact &times; {dbCapturePercent}% captured</p>
-                    <p className="text-gray-700 mt-1">Opportunity in Database Right Now:</p>
-                    <p className="text-3xl font-bold text-blue-600">{dbOpportunity} <span className="text-xl">Units</span></p>
-                  </div>
-                  <div className="text-center mt-4 pt-4 border-t">
-                    <p className="text-sm text-gray-600">{goalTrans} units / ({dbTransactPercent}% &times; {dbCapturePercent}%)</p>
-                    <p className="text-gray-700 mt-1">Total Contacts Needed for Goal:</p>
-                    <p className="text-2xl font-bold text-gray-800">{contactsNeededForGoal}</p>
-                  </div>
-                  <div className="flex justify-between mt-2">
-                    <span className="text-gray-700">Contacts to Add This Year:</span>
-                    <span className="font-semibold">{contactsToAddThisYear}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Contacts to Add Each Month:</span>
-                    <span className="font-semibold">{contactsToAddPerMonth}</span>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Average Commission:</p>
+    <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Units Sold:</p>
+                  <p className="text-2xl font-bold text-gray-800">{goalTrans}</p>
+                </div>
+              </div>
+
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="border-l-4 border-green-500 pl-4">
+                  <h3 className="text-lg font-bold text-gray-800 mb-4">Listing Side Breakdown</h3>
+                  <div className="space-y-3">
+                    <div>
+           <p className="text-sm text-gray-600">Listings Sold</p>
+                      <p className="text-lg font-semibold">{listingCount} <span className="text-sm text-gray-500">({listingPercent}% of total)</span></p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Listings Taken Needed</p>
+                     <p className="text-lg font-semibold">{listingsTaken}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Conversion Rate (Taken to Sold)</p>
+     <p className="text-lg font-semibold">{listingToSold}%</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Listing Appointments Needed</p>
+                      <p className="text-lg font-semibold">{listingApptsNeeded}</p>
+       </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Conversion Rate (Appt to Taken)</p>
+                      <p className="text-lg font-semibold">{listingApptConv}%</p>
+                    </div>
+       </div>
+                </div>
+
+                <div className="border-l-4 border-purple-500 pl-4">
+                  <h3 className="text-lg font-bold text-gray-800 mb-4">Buyer Side Breakdown</h3>
+                  <div className="space-y-3">
+                    <div>
+               <p className="text-sm text-gray-600">Buyers Closed</p>
+                      <p className="text-lg font-semibold">{buyerCount} <span className="text-sm text-gray-500">({(100-listingPercent).toFixed(1)}% of total)</span></p>
+                    </div>
+                    <div>
+                      <p 
+className="text-sm text-gray-600">Buyers Under Contract Needed</p>
+                      <p className="text-lg font-semibold">{buyersUnderContract}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Conversion Rate (Contract to Sold)</p>
+          <p className="text-lg font-semibold">{buyerSoldConv}%</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Buyer Appointments Needed</p>
+                      <p className="text-lg font-semibold">{buyerApptsNeeded}</p>
+            </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Conversion Rate (Appt to Contract)</p>
+                      <p className="text-lg font-semibold">{buyerApptConv}%</p>
+                    </div>
+            </div>
                 </div>
               </div>
             </div>
 
-
-            {/* Conversations & Lead Sources */}
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Conversations & Lead Sources</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-3">Top 4 Lead Sources</h3>
-                  <ol className="list-decimal list-inside space-y-2">
-                    {formData.leadSource1 && <li className="text-gray-700">{formData.leadSource1}</li>}
-                    {formData.leadSource2 && <li className="text-gray-700">{formData.leadSource2}</li>}
-                    {formData.leadSource3 && <li className="text-gray-700">{formData.leadSource3}</li>}
-                    {formData.leadSource4 && <li className="text-gray-700">{formData.leadSource4}</li>}
-                  </ol>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Total Appointments Needed:</span>
-                    <span className="font-semibold text-lg">{totalApptsNeeded}</span>
-                  </div>
-                  <div className="text-center mt-4">
-                    <p className="text-sm text-gray-600">{totalApptsNeeded} appts &times; {convosPerAppt} conversations per appt</p>
-                    <p className="text-gray-700 mt-1">Total Conversations Needed (Annual):</p>
-                    <p className="text-3xl font-bold text-blue-600">{totalConvosNeeded}</p>
-                  </div>
-                  <div className="flex justify-between mt-2 pt-2 border-t">
-                    <span className="text-gray-700">Conversations Needed (Monthly):</span>
-                    <span className="font-semibold text-lg">{totalConvosPerMonth}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Activity Goals */}
-            <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Activity Goals</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-700">Open Houses</p>
-                  <p className="text-2xl font-bold text-gray-800">{openHouses}</p>
-                  <p className="text-sm text-gray-600">{openHousesPerMonth}/mo</p>
-                </div>
-                <div className="text-center bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-700">Client Events</p>
-                  <p className="text-2xl font-bold text-gray-800">{clientEvents}</p>
-                  <p className="text-sm text-gray-600">{clientEventsPerMonth}/mo</p>
-                </div>
-                <div className="text-center bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-700">Client Seminars</p>
-                  <p className="text-2xl font-bold text-gray-800">{clientSeminars}</p>
-                  <p className="text-sm text-gray-600">{clientSeminarsPerMonth}/mo</p>
-                </div>
-                <div className="text-center bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-700">Social Posts</p>
-                  <p className="text-2xl font-bold text-gray-800">{socialPosts}</p>
-                  <p className="text-sm text-gray-600">{socialPostsPerMonth}/mo</p>
-                </div>
-              </div>
-              <div className="text-center mt-6">
-                <p className="text-lg text-gray-700">Planning for <span className="font-bold text-blue-600">{workingWeeks}</span> working weeks</p>
-              </div>
-            </div>
-          </div>
-          {/* END: Add this new output card */}                  
-                
+            {/* The Budget Model Card - ADD 'budget-model-card' AND 'mb-8' CLASS */}
+            <div className="bg-white rounded-lg shadow-xl p-8 mb-8 budget-model-card">
+              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Budget Model</h1>
+              
+     <div className="mb-6">
+                <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+                {formData.teamName && (
+                  <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
+                )}
+                <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
         </div>
-      </div>
+
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
+                <div className="space-y-2">
+                  {costOfSales.listingSpecialist > 0 && (
+                    <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Listing Specialist</span>
+                      <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+                    </div>
+                  )}
+                  {costOfSales.buyerSpecialist > 0 && (
+               <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Buyer Specialist</span>
+                      <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                    </div>
+                  )}
+           {costOfSales.referralFees > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Referral Fees</span>
+                      <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
+                    </div>
+             )}
+                  {costOfSales.closingGifts > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Closing Gifts</span>
+                      <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
+               </div>
+                  )}
+                  {costOfSales.tc > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Transaction Coordinator</span>
+              <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
+                    </div>
+                  )}
+                  {costOfSales.kwCares > 0 && (
+                    <div className="flex justify-between py-2">
+          <span className="text-gray-700">KW Cares</span>
+                      <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
+                    </div>
+                  )}
+                  {costOfSales.other > 0 && (
+     <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Other Cost of Sale</span>
+                      <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
+                    </div>
+                  )}
+   <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                    <span className="text-gray-800">Total Cost of Sales</span>
+                    <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
+                  </div>
+                </div>
+              </div>
+
+    <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
+                <div className="space-y-2">
+                  {opExpenses.compensation > 0 && (
+                    <div className="flex justify-between py-2">
+   <span className="text-gray-700">Compensation/Salary</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
+                    </div>
+                  )}
+                  {opExpenses.leadGen > 0 && (
+                    <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Lead Generation</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
+                    </div>
+                  )}
+                  {opExpenses.occupancy > 0 && (
+               <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Occupancy</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
+                    </div>
+                  )}
+          {opExpenses.education > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Education & Coaching</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
+                    </div>
+             )}
+                  {opExpenses.supplies > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Supplies & Office</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
+                </div>
+                  )}
+                  {opExpenses.communication > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Communication & Tech</span>
+                <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
+                    </div>
+                  )}
+                  {opExpenses.auto > 0 && (
+                    <div className="flex justify-between py-2">
+            <span className="text-gray-700">Auto</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
+                    </div>
+                  )}
+                  {opExpenses.equipment > 0 && (
+      <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Equipment</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
+                    </div>
+                  )}
+                  {opExpenses.insurance > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Insurance</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
+                    </div>
+  )}
+                  {opExpenses.other > 0 && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-gray-700">Other Expenses</span>
+                      <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
+    </div>
+                  )}
+                  <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                    <span className="text-gray-800">Total Operating Expenses</span>
+                    <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
+                  </div>
+            </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="text-2xl font-bold">NET INCOME</span>
+                  <span className="text-3xl font-bold">${formatCurrency(netIncome)}</span>
+          </div>
+              </div>
+            </div>
+
+            {/* NEW LEAD GEN MODEL CARD - ADD 'lead-gen-model-card' CLASS */}
+            <div className="bg-white rounded-lg shadow-xl p-8 lead-gen-model-card">
+              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>
+
+              <div className="mb-6">
+                <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+                {formData.teamName && (
+                  <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                {/* Contacts & Database */}
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4">Database & Contacts</h2>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Contacts in your phone:</span>
+                      <span className="font-semibold">{phoneContacts}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Contacts Met:</span>
+                      <span className="font-semibold">{phoneContactsMet}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Contacts Haven't Met:</span>
+                      <span className="font-semibold">{phoneContactsNotMet}</span>
+                    </div>
+                    <div className="flex justify-between pt-2 mt-2 border-t">
+                      <span className="text-gray-700">Social Connects:</span>
+                      <span className="font-semibold">{socialFollowers}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Social Connects Met:</span>
+                      <span className="font-semibold">{socialFollowersMet}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Social Connections Not Met:</span>
+                      <span className="font-semibold">{socialFollowersNotMet}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Database Opportunity */}
+                <div className="bg-blue-50 p-6 rounded-lg">
+                  <h2 className="text-xl font-bold text-blue-800 mb-4">Database Opportunity</h2>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700"># in your database:</span>
+                      <span className="font-semibold">{dbCount}</span>
+                    </div>
+                    <div className="text-center mt-4">
+                      <p className="text-sm text-gray-600">{dbCount} contacts &times; {dbTransactPercent}% transact &times; {dbCapturePercent}% captured</p>
+                      <p className="text-gray-700 mt-1">Opportunity in Database Right Now:</p>
+                      <p className="text-3xl font-bold text-blue-600">{dbOpportunity} <span className="text-xl">Units</span></p>
+                    </div>
+                    <div className="text-center mt-4 pt-4 border-t">
+                      <p className="text-sm text-gray-600">{goalTrans} units / ({dbTransactPercent}% &times; {dbCapturePercent}%)</p>
+                      <p className="text-gray-700 mt-1">Total Contacts Needed for Goal:</p>
+                      <p className="text-2xl font-bold text-gray-800">{contactsNeededForGoal}</p>
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <span className="text-gray-700">Contacts to Add This Year:</span>
+                      <span className="font-semibold">{contactsToAddThisYear}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Contacts to Add Each Month:</span>
+                      <span className="font-semibold">{contactsToAddPerMonth}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Conversations & Lead Sources */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Conversations & Lead Sources</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-700 mb-3">Top 4 Lead Sources</h3>
+                    <ol className="list-decimal list-inside space-y-2">
+                      {formData.leadSource1 && <li className="text-gray-700">{formData.leadSource1}</li>}
+                      {formData.leadSource2 && <li className="text-gray-700">{formData.leadSource2}</li>}
+                      {formData.leadSource3 && <li className="text-gray-700">{formData.leadSource3}</li>}
+                      {formData.leadSource4 && <li className="text-gray-700">{formData.leadSource4}</li>}
+                    </ol>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Total Appointments Needed:</span>
+                      <span className="font-semibold text-lg">{totalApptsNeeded}</span>
+                    </div>
+                    <div className="text-center mt-4">
+                      <p className="text-sm text-gray-600">{totalApptsNeeded} appts &times; {convosPerAppt} conversations per appt</p>
+                      <p className="text-gray-700 mt-1">Total Conversations Needed (Annual):</p>
+                      <p className="text-3xl font-bold text-blue-600">{totalConvosNeeded}</p>
+                    </div>
+                    <div className="flex justify-between mt-2 pt-2 border-t">
+                      <span className="text-gray-700">Conversations Needed (Monthly):</span>
+                      <span className="font-semibold text-lg">{totalConvosPerMonth}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activity Goals */}
+              <div>
+                <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Activity Goals</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700">Open Houses</p>
+                    <p className="text-2xl font-bold text-gray-800">{openHouses}</p>
+                    <p className="text-sm text-gray-600">{openHousesPerMonth}/mo</p>
+                  </div>
+                  <div className="text-center bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700">Client Events</p>
+                    <p className="text-2xl font-bold text-gray-800">{clientEvents}</p>
+                    <p className="text-sm text-gray-600">{clientEventsPerMonth}/mo</p>
+                  </div>
+                  <div className="text-center bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700">Client Seminars</p>
+                    <p className="text-2xl font-bold text-gray-800">{clientSeminars}</p>
+                    <p className="text-sm text-gray-600">{clientSeminarsPerMonth}/mo</p>
+                  </div>
+                  <div className="text-center bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700">Social Posts</p>
+                    <p className="text-2xl font-bold text-gray-800">{socialPosts}</p>
+                    <p className="text-sm text-gray-600">{socialPostsPerMonth}/mo</p>
+                  </div>
+                </div>
+                <div className="text-center mt-6">
+                  <p className="text-lg text-gray-700">Planning for <span className="font-bold text-blue-600">{workingWeeks}</span> working weeks</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </>
     );
   }
 
+
+
+                     
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4 form-container">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Real Estate Business Plan Calculator</h1>
         <p className="text-gray-600 mb-8">Plan your year with confidence</p>
