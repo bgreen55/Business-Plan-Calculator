@@ -396,7 +396,8 @@ const RealEstateBusinessPlan = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-xl p-8">
+    {/* The Budget Model */}
+          <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Budget Model</h1>
             
             <div className="mb-6">
@@ -537,7 +538,7 @@ const RealEstateBusinessPlan = () => {
             </div>
           </div>
 
-          {/* Lead Generation Card */}
+   {/* Lead Generation Card */}
           <div className="bg-white rounded-lg shadow-xl p-8">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>
 
@@ -1034,7 +1035,6 @@ const RealEstateBusinessPlan = () => {
             </div>
           </section>
 
-    //Lead Generation Model Input
           <section>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Lead Generation Model</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
