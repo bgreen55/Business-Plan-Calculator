@@ -172,8 +172,26 @@ const RealEstateBusinessPlan = () => {
     
     const goalTrans = parseFloat(formData.goalTransactions) || 0;
     const listingPercent = parseFloat(formData.listingPercentage) || 0;
-    const listingCount = goalTrans * (listingPercent / 100);
-    const buyerCount = goalTrans - listingCount;
+    //const listingCount = goalTrans * (listingPercent / 100);
+    //const buyerCount = goalTrans - listingCount;
+    let listingCount = goalTrans * (listingPercent / 100);
+    let buyerCount = goalTrans - listingCount;
+
+    const isTieBreaker = (listingCount % 1 === 0.5) && (buyerCount % 1 === 0.5);
+
+    if (isTieBreaker) {
+      listingCount = Math.ceil(listingCount);
+      buyerCount = Math.floor(buyerCount);
+    } else {
+      listingCount = Math.round(listingCount);
+      buyerCount = Math.round(buyerCount);
+    }
+
+    const currentTotal = listingCount + buyerCount;
+    if (currentTotal !== goalTrans) {
+      const difference = goalTrans - currentTotal;
+      buyerCount += difference;
+    }
     
     const listingToSold = parseFloat(formData.listingToSoldRatio) || 0;
     const listingApptConv = parseFloat(formData.listingApptConversion) || 0;
