@@ -217,8 +217,11 @@ const RealEstateBusinessPlan = () => {
             
             <div className="mb-6">
               <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+              {formData.teamName && (
+                <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
+              )}
             </div>
-
+           
             <div className="bg-blue-50 p-6 rounded-lg mb-8">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Financial Summary</h2>
               <div className="space-y-2">
@@ -312,6 +315,9 @@ const RealEstateBusinessPlan = () => {
             
             <div className="mb-6">
               <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
+              {formData.teamName && (
+                <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
+              )}
               <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
             </div>
 
@@ -471,7 +477,7 @@ const RealEstateBusinessPlan = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Team Name</label>
-                <input type="text" name="teamName" value={formData.teamName} onChange={handleChange}
+                <input type="text" name="teamName" value={formData.teamName} onChange={handleChange} placeholder="Enter team name if applicable"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>                    
             </div>
