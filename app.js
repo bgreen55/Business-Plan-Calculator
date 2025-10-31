@@ -294,6 +294,12 @@ const RealEstateBusinessPlan = () => {
         <style>
           {`
             @media print {
+              /* Set page size and remove default margins */
+              @page {
+                size: letter; /* 8.5in x 11in */
+                margin: 0.5in; /* Add a half-inch margin */
+              }
+
               /* Hide elements tagged with .no-print */
               .no-print {
                 display: none !important;
@@ -304,70 +310,93 @@ const RealEstateBusinessPlan = () => {
                 display: none !important;
               }
 
-              /* Reset the results container for printing */
-              .results-container {
+              /* Body and container resets for print */
+              body, .results-container {
                 background: #fff !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 max-width: 100% !important;
-                font-size: 14px; /* Set a smaller base font for print */
+                font-size: 10pt !important; /* Set a small base font for print */
               }
 
               /* --- Page Break Rules --- */
               .budget-model-card {
                 page-break-before: always;
               }
-              
               .lead-gen-model-card {
                 page-break-before: always;
               }
 
-              /* --- NEW STYLES TO FIT CONTENT --- */
+              /* --- AGGRESSIVE STYLES --- */
               
               /* Style all 3 cards for printing */
               .print-card {
-                background: #fff !important;
+                background: #fff !visible;
                 box-shadow: none !important;
-                border: 1px solid #eee !important;
+                border: 1px solid #ccc !important;
                 margin-bottom: 0 !important;
-                padding: 1.5rem !important; /* REDUCED PADDING */
-                page-break-inside: avoid; /* Try to keep card content together */
+                padding: 0.5rem !important; /* drastically reduced padding */
+                page-break-inside: avoid; /* Try to keep card content on one page */
               }
 
               /* Reduce heading sizes */
               .print-card h1 {
-                font-size: 24px !important;
-                margin-bottom: 1.5rem !important;
+                font-size: 18pt !important;
+                margin-bottom: 0.75rem !important;
               }
               .print-card h2 {
-                font-size: 18px !important;
-                margin-bottom: 1rem !important;
+                font-size: 14pt !important;
+                margin-bottom: 0.5rem !important;
+                padding-bottom: 0.25rem !important;
               }
               .print-card h3 {
-                font-size: 16px !important;
-                margin-bottom: 0.75rem !important;
+                font-size: 12pt !important;
+                margin-bottom: 0.5rem !important;
               }
 
               /* Reduce text sizes */
               .print-card p, .print-card span, .print-card li {
-                font-size: 13px !important; /* Small but legible */
+                font-size: 10pt !important;
+                line-height: 1.2 !important;
+              }
+              .print-card .text-sm {
+                font-size: 9pt !important;
               }
               
               /* Target specific large text elements */
-              .print-card .text-3xl { font-size: 22px !important; }
-              .print-card .text-2xl { font-size: 18px !important; }
-              .print-card .text-xl { font-size: 16px !important; }
-              .print-card .text-lg { font-size: 15px !important; }
+              .print-card .text-3xl { font-size: 16pt !important; }
+              .print-card .text-2xl { font-size: 14pt !important; }
+              .print-card .text-xl { font-size: 12pt !important; }
+              .print-card .text-lg { font-size: 11pt !important; }
 
-              /* Reduce spacing */
-              .print-card .space-y-2 { gap: 0.25rem !important; }
-              .print-card .space-y-3 { gap: 0.5rem !important; }
-              .print-card .py-2 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
-              .print-card .p-6 { padding: 1rem !important; }
-              .print-card .p-4 { padding: 0.75rem !important; }
-              .print-card .mb-8 { margin-bottom: 1.5rem !important; }
-              .print-card .mb-6 { margin-bottom: 1rem !important; }
+              /* Reduce all spacing, padding, and gaps */
+              .print-card .space-y-2 { gap: 0.15rem !important; }
+              .print-card .space-y-3 { gap: 0.25rem !important; }
+              .print-card .py-2 { padding-top: 0.1rem !important; padding-bottom: 0.1rem !important; }
+              .print-card .p-6 { padding: 0.5rem !important; }
+              .print-card .p-4 { padding: 0.25rem !important; }
+              .print-card .mb-8 { margin-bottom: 0.75rem !important; }
+              .print-card .mb-6 { margin-bottom: 0.5rem !important; }
+              .print-card .mb-4 { margin-bottom: 0.25rem !important; }
+              .print-card .mt-2 { margin-top: 0.15rem !important; }
+              .print-card .mt-4 { margin-top: 0.25rem !important; }
+              .print-card .mt-6 { margin-top: 0.5rem !important; }
+              .print-card .gap-4 { gap: 0.5rem !important; }
+              .print-card .gap-6 { gap: 0.75rem !important; }
               .print-card .gap-8 { gap: 1rem !important; }
+
+              /* Shrink the final Net Income box */
+              .print-card .bg-gradient-to-r {
+                padding: 0.5rem !important;
+              }
+
+              /* --- NEW LAYOUT RULE --- */
+              /* This forces elements to be 2 columns for print */
+              .print-grid-2-col {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.5rem !important;
+              }
             }
           `}
         </style>
@@ -427,7 +456,7 @@ const RealEstateBusinessPlan = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 print-grid-2-col">
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <p className="text-gray-700">Average Commission:</p>
     <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
@@ -647,7 +676,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 print-grid-2-col">
                 {/* Contacts & Database */}
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h2 className="text-xl font-bold text-gray-800 mb-4">Database & Contacts</h2>
@@ -712,7 +741,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               {/* Conversations & Lead Sources */}
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Conversations & Lead Sources</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 print-grid-2-col">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-700 mb-3">Top 4 Lead Sources</h3>
                     <ol className="list-decimal list-inside space-y-2">
