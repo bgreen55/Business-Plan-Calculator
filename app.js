@@ -5,6 +5,7 @@ const RealEstateBusinessPlan = () => {
     name: '',
     email: '',
     teamName: '',
+    experienceLevel: '',
     avgSalesPrice: '',
     avgCommissionPercent: '',
     goalTransactions: '',
@@ -48,6 +49,11 @@ const RealEstateBusinessPlan = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleExperienceChange = (e) => {
+    const { value } = e.target;
+    setFormData((prev) = > ({...prev, experienceLevel: value,}));
+  };
+
   const calculateValues = () => {
     const avgPrice = parseFloat(formData.avgSalesPrice) || 0;
     const commPercent = parseFloat(formData.avgCommissionPercent) || 0;
@@ -59,6 +65,33 @@ const RealEstateBusinessPlan = () => {
     return { avgCommissionDollar, totalGCI };
   };
 
+  let experiencePresets = {
+    new: {
+      listingApptToListing: "Newer agents should use 50%",
+      listingToSold: "If you don't know use the average of 75%",
+      buyerApptToBuyer: "Newer agents should use 60%",
+      buyerToSold: "If you don't know use the average of 75%",
+      },
+    solo: {
+      listingApptToListing: "Experienced agents should use 70%",
+      listingToSold: "If you don't know use the average of 75%",
+      buyerApptToBuyer: "Experienced agents should use 80%",
+      buyerToSold: "If you don't know use the average of 75%",
+      },
+    teamOwner: {
+      listingApptToListing: "A Teams Average is 65%",
+      listingToSold: "If you don't know use the average of 75%",
+      buyerApptToBuyer: "A Teams Average is 80%",
+      buyerToSold: "If you don't know use the average of 75%",
+      },
+    onTeam: {
+      listingApptToListing: "Team Members Average is 65%",
+      listingToSold: "If you don't know use the average of 75%",
+      buyerApptToBuyer: "Team Members Average is 78%",
+      buyerToSold: "If you don't know use the average of 75%",
+      },
+  };
+  
   const calculateCostOfSales = () => {
     const goalTrans = parseFloat(formData.goalTransactions) || 0;
     const totalGCI = calculateValues().totalGCI;
@@ -479,8 +512,31 @@ const RealEstateBusinessPlan = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Team Name</label>
                 <input type="text" name="teamName" value={formData.teamName} onChange={handleChange} placeholder="Enter team name if applicable"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div> 
+              <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 mt-3">Experience Level</label>
+                  <select name="experienceLevel" value={formData.experienceLevel || ""} onChange="{handleExperienceChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select Experience Level</option>
+                    <option value="new">1-3 Yr Experience</option>
+                    <option value="solo">Solo Agent 4+ Years</option>
+                    <option value="teamOwner">Team Owner</option>
+                    <option value="onTeam">On a Team</option>
+                  </select>
               </div>                    
             </div>
+            <div>
+              {(formData.experienceLevel === "teamOwner" || formData.experienceLevel === "onTeam") && (
+                  <div className="mt-2 text-sm text-gray-600 italic">
+                      {/* Ternary Operator: Checks for teamOwner, otherwise shows onTeam note */}
+                      {formData.experienceLevel === "teamOwner" 
+                          ? "Great, answer the remaining questions as the team owner NOT for your individual production. Your team's Economic Model includes all agents' production including your own."
+                          : "Great, answer the remaining questions for your results on the team. For example: When asked for the average GCI on a transaction that should reflect YOUR portion of the GCI-not the entire GCI being paid out by the transaction."
+                      }
+                  </div>
+              )}
+          </div>
           </section>
 
           <section className="border-b pb-6">
@@ -524,22 +580,26 @@ const RealEstateBusinessPlan = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Listing to Sold Ratio (%)</label>
-                <input type="number" step="0.01" name="listingToSoldRatio" value={formData.listingToSoldRatio} onChange={handleChange}
+                <input type="number" step="0.01" name="listingToSoldRatio" value={formData.listingToSoldRatio} onChange={handleChange} placeholder={
+                    experiencePresets[formData.experienceLevel]?.listingToSold || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Listing Appt to Listing Taken Conversion (%)</label>
-                <input type="number" step="0.01" name="listingApptConversion" value={formData.listingApptConversion} onChange={handleChange}
+                <input type="number" step="0.01" name="listingApptConversion" value={formData.listingApptConversion} onChange={handleChange} placeholder={
+                    experiencePresets[formData.experienceLevel]?.listingApptToListing || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Buyer Sold Conversion Ratio (%)</label>
-                <input type="number" step="0.01" name="buyerSoldConversion" value={formData.buyerSoldConversion} onChange={handleChange}
+                <input type="number" step="0.01" name="buyerSoldConversion" value={formData.buyerSoldConversion} onChange={handleChange} placeholder={
+                    experiencePresets[formData.experienceLevel]?.buyerToSold || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Buyer Appt to Buyer Taken Conversion (%)</label>
-                <input type="number" step="0.01" name="buyerApptConversion" value={formData.buyerApptConversion} onChange={handleChange}
+                <input type="number" step="0.01" name="buyerApptConversion" value={formData.buyerApptConversion} onChange={handleChange} placeholder={
+                    experiencePresets[formData.experienceLevel]?.buyerApptToBuyer || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
