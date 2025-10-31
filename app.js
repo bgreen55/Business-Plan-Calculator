@@ -1,5 +1,4 @@
 const { useState } = React;
-const { Calculator, ArrowLeft } = lucide;
 
 const RealEstateBusinessPlan = () => {
   const [formData, setFormData] = useState({
@@ -173,8 +172,7 @@ const RealEstateBusinessPlan = () => {
             onClick={handleBackToForm}
             className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium"
           >
-            <ArrowLeft size={20} />
-            Back to Form
+            <span>← Back to Form</span>
           </button>
 
           <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
@@ -736,8 +734,7 @@ const RealEstateBusinessPlan = () => {
               onClick={handleCalculate}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
             >
-              <Calculator size={20} />
-              Calculate Business Plan
+              <span>📊 Calculate Business Plan</span>
             </button>
           </div>
         </div>
