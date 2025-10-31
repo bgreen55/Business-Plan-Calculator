@@ -634,10 +634,11 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 )}
                 <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
         </div>
-
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
-                <div className="flex justify-between py-1 text-sm font-semibold text-gray-600 border-b print:hidden">
+          <div className="mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
+              
+              {/* --- HEADER ROW --- */}
+              <div className="flex justify-between py-1 text-sm font-semibold text-gray-600 border-b print:hidden">
                 <span>Category</span>
                 <div className="flex gap-4 w-1/2 justify-end">
                   <span className="w-28 text-right">Your Budget</span>
@@ -645,6 +646,46 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   <span className="w-20 text-right">Rec. %</span>
                 </div>
               </div>
+
+              {/* --- EXPENSE LIST --- */}
+              <div className="space-y-2">
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Listing Specialist</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.listingSpecialist)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.listingSpecialist)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Buyer Specialist</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.buyerSpecialist)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.buyerSpecialist)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Other Cost of Sales</span>
+                  {/* This row combines all your other COS fields to compare against the model */}
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(otherCOSSum)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.otherCOS)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.otherCOS)}</span>
+                  </div>
+                </div>
+
+                {/* --- TOTAL ROW --- */}
+                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                  <span className="text-gray-800">Total Cost of Sales</span>
+                  <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
+                </div>
+              </div>
+            </div>
+              
 
               {/* --- NEW EXPENSE LIST --- */}
               <div className="space-y-2">
@@ -705,74 +746,118 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
 
     <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
-                <div className="space-y-2">
-                  {opExpenses.compensation > 0 && (
-                    <div className="flex justify-between py-2">
-   <span className="text-gray-700">Compensation/Salary</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
-                    </div>
-                  )}
-                  {opExpenses.leadGen > 0 && (
-                    <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Lead Generation</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
-                    </div>
-                  )}
-                  {opExpenses.occupancy > 0 && (
-               <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Occupancy</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
-                    </div>
-                  )}
-          {opExpenses.education > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Education & Coaching</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
-                    </div>
-             )}
-                  {opExpenses.supplies > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Supplies & Office</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
+              
+              {/* --- HEADER ROW --- */}
+              <div className="flex justify-between py-1 text-sm font-semibold text-gray-600 border-b print:hidden">
+                <span>Category</span>
+                <div className="flex gap-4 w-1/2 justify-end">
+                  <span className="w-28 text-right">Your Budget</span>
+                  <span className="w-20 text-right">Actual %</span>
+                  <span className="w-20 text-right">Rec. %</span>
                 </div>
-                  )}
-                  {opExpenses.communication > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Communication & Tech</span>
-                <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
-                    </div>
-                  )}
-                  {opExpenses.auto > 0 && (
-                    <div className="flex justify-between py-2">
-            <span className="text-gray-700">Auto</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
-                    </div>
-                  )}
-                  {opExpenses.equipment > 0 && (
-      <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Equipment</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
-                    </div>
-                  )}
-                  {opExpenses.insurance > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Insurance</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
-                    </div>
-  )}
-                  {opExpenses.other > 0 && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-gray-700">Other Expenses</span>
-                      <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
-    </div>
-                  )}
-                  <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                    <span className="text-gray-800">Total Operating Expenses</span>
-                    <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
-                  </div>
-            </div>
               </div>
+
+              {/* --- EXPENSE LIST --- */}
+              <div className="space-y-2">
+                
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Compensation/Salary</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.compensation)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.compensation)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.compensation)}</span>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Lead Generation</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.leadGen)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.leadGen)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Occupancy</span>
+                  <div className="flex gap-4 w-1/Example-Code/Example-Code/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.occupancy)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.occupancy)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Education & Coaching</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.education)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.education)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.education)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Supplies & Office</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.supplies)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.supplies)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.supplies)}</span>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Communication & Tech</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.communication)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.communication)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.communication)}</span>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Auto</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.auto)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.auto)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.auto)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Equipment</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.equipment)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.equipment)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.equipment)}</span>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Insurance</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.insurance)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.insurance)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.insurance)}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between py-2 items-center">
+                  <span className="text-gray-700">Other Expenses</span>
+                  <div className="flex gap-4 w-1/2 justify-end">
+                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.other)}</span>
+                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.other)}</span>
+                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.other)}</span>
+                  </div>
+                </div>
+
+                {/* --- TOTAL ROW --- */}
+                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                  <span className="text-gray-800">Total Operating Expenses</span>
+                  <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
+                </div>
+           </div>
+        </div>
 
               <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
                 <div className="flex justify-between items-center">
