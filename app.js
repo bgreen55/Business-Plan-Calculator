@@ -397,6 +397,12 @@ const RealEstateBusinessPlan = () => {
                 grid-template-columns: 1fr 1fr !important;
                 gap: 1.5rem !important;
               }
+
+              .print-grid-4-col {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr 1fr 1fr !important;
+                gap: 0.5rem !important; /* Tighter gap for 4 columns */
+              }
             }
           `}
         </style>
@@ -456,7 +462,7 @@ const RealEstateBusinessPlan = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 print-grid-2-col">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <p className="text-gray-700">Average Commission:</p>
     <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
@@ -467,7 +473,7 @@ const RealEstateBusinessPlan = () => {
                 </div>
               </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 print-grid-2-col">
                 <div className="border-l-4 border-green-500 pl-4">
                   <h3 className="text-lg font-bold text-gray-800 mb-4">Listing Side Breakdown</h3>
                   <div className="space-y-3">
@@ -772,7 +778,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               {/* Activity Goals */}
               <div>
                 <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Activity Goals</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 print-grid-4-col">
                   <div className="text-center bg-gray-50 p-4 rounded-lg">
                     <p className="text-gray-700">Open Houses</p>
                     <p className="text-2xl font-bold text-gray-800">{openHouses}</p>
