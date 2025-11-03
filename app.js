@@ -645,6 +645,8 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
 
             {/* The Budget Model Card */}
+            <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
+
             <div className="flex justify-between items-center mb-8 relative">      
                 {/* Invisible spacer to keep title centered */}
                 <div className="w-24 md:w-32"></div>
@@ -850,8 +852,8 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
 
             {/* NEW LEAD GEN MODEL CARD */}
-            {/*
             <div className="bg-white rounded-lg shadow-xl p-8 lead-gen-model-card print-card">
+               {/*
               <div className="flex justify-between items-center mb-4">
                 <div></div>
                 <div className="text-right">
