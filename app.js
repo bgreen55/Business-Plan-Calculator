@@ -546,7 +546,7 @@ const RealEstateBusinessPlan = () => {
                 {/* Logo + Slogan */}
                 <div className="absolute right-0 top-1/2 transform -translate-y-1/2 text-right">
                   <img
-                    src="/logo.png"
+                    src="/public/kwsuccess.png"
                     alt="KW Success Realty Logo"
                     className="w-20 h-auto mx-auto"
                   />
