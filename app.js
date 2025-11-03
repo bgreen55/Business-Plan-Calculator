@@ -526,12 +526,33 @@ const RealEstateBusinessPlan = () => {
             {/* The Economic Model Card */}
             <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
               
-              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
-              <div className="flex justify-between items-center mb-4">
-                <div></div>
-                <div className="text-right">
-                  <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
-                  <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
+              // <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
+              // <div className="flex justify-between items-center mb-4">
+              //   <div></div>
+              //   <div className="text-right">
+              //     <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
+              //     <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
+              //   </div>
+              // </div>
+              <div className="flex justify-between items-center mb-8 relative">
+                {/* Invisible spacer to keep title centered */}
+                <div className="w-24 md:w-32"></div>
+              
+                {/* Centered Title */}
+                <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
+                  Real Estate Business Plan Calculator
+                </h1>
+              
+                {/* Logo + Slogan */}
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 text-right">
+                  <img
+                    src="/logo.png"
+                    alt="KW Success Realty Logo"
+                    className="w-20 h-auto mx-auto"
+                  />
+                  <p className="text-xs text-gray-600 italic mt-1 whitespace-nowrap">
+                    Your Goals = Our Goals
+                  </p>
                 </div>
               </div>
               
