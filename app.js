@@ -526,10 +526,7 @@ const RealEstateBusinessPlan = () => {
             {/* The Economic Model Card */}
             <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
               
-              <div className="flex justify-between items-center mb-8 relative">      
-                {/* Invisible spacer to keep title centered */}
-                <div className="w-24 md:w-32"></div>
-              
+              <div className="mb-8 relative">      
                 {/* Centered Title */}
                 <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
                   The Economic Model
@@ -647,10 +644,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             {/* The Budget Model Card */}
             <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
 
-            <div className="flex justify-between items-center mb-8 relative">      
-                {/* Invisible spacer to keep title centered */}
-                <div className="w-24 md:w-32"></div>
-              
+              <div className="mb-8 relative">                
                 {/* Centered Title */}
                 <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
                   The Budget Model
@@ -853,16 +847,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
 
             {/* NEW LEAD GEN MODEL CARD */}
             <div className="bg-white rounded-lg shadow-xl p-8 lead-gen-model-card print-card">
-               {/*
-              <div className="flex justify-between items-center mb-4">
-                <div></div>
-                <div className="text-right">
-                  <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
-                  <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
-                </div>
-              </div>
-              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>  */}
-
+              
               <div className="mb-8 relative">      
                 {/* Centered Title */}
                 <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
@@ -1027,15 +1012,18 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4 form-container">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
-        <div className="flex justify-between items-center mb-4">
-          <div></div>
+
+        <div className="mb-8 relative">
+          <h1 className="text-3xl font-bold text-gray-800">
+            Real Estate Business Plan Calculator
+          </h1>
+          <p className="text-gray-600 mb-8">Plan your year with confidence</p>          
           <div className="text-right">
             <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
             <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Real Estate Business Plan Calculator</h1>
-        <p className="text-gray-600 mb-8">Plan your year with confidence</p>
+
         
         <div className="space-y-6">
           <section className="border-b pb-6">
