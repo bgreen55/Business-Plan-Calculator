@@ -526,15 +526,16 @@ const RealEstateBusinessPlan = () => {
             {/* The Economic Model Card */}
             <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
               
-              // <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
-              // <div className="flex justify-between items-center mb-4">
-              //   <div></div>
-              //   <div className="text-right">
-              //     <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
-              //     <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
-              //   </div>
-              // </div>
-              <div className="flex justify-between items-center mb-8 relative">
+            {/*   <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
+              <div className="flex justify-between items-center mb-4">
+                <div></div>
+                <div className="text-right">
+                  <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
+                  <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
+                </div>
+              </div>  */}
+              
+              <div className="flex justify-between items-center mb-8 relative">      
                 {/* Invisible spacer to keep title centered */}
                 <div className="w-24 md:w-32"></div>
               
