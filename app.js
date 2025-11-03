@@ -1072,27 +1072,27 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Income Goals</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Average Sales Price ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">1. Average Sales Price ($)</label>
                 <input type="number" name="avgSalesPrice" value={formData.avgSalesPrice} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Average Commission per Side (%)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">2. Average Commission per Side (%)</label>
                 <input type="number" step="0.01" name="avgCommissionPercent" value={formData.avgCommissionPercent} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Average Commission per Side ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">3. Average Commission per Side ($)</label>
                 <input type="text" value={'$' + formatCurrency(avgCommissionDollar)} readOnly
                   className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Goal # of Transactions</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">4. Goal # of Transactions</label>
                 <input type="number" name="goalTransactions" value={formData.goalTransactions} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Total GCI Goal</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">5. Total GCI Goal</label>
                 <input type="text" value={'$' + formatCurrency(totalGCI)} readOnly
                   className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-lg font-semibold text-blue-600" />
               </div>
@@ -1103,30 +1103,30 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Conversion Ratios</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">% of Transactions That Will Be Listings</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">6. What % of Your Transactions Will Be Listings</label>
                 <input type="number" step="0.01" name="listingPercentage" value={formData.listingPercentage} onChange={handleChange} placeholder={"Goal is 50%"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Listing to Sold Ratio (%)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">7. What is Your Listing to Sold Ratio (%)</label>
                 <input type="number" step="0.01" name="listingToSoldRatio" value={formData.listingToSoldRatio} onChange={handleChange} placeholder={
                     experiencePresets[formData.experienceLevel]?.listingToSold || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Listing Appt to Listing Taken Conversion (%)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">8. What is Your Listing Appt to Listing Taken Conversion (%)</label>
                 <input type="number" step="0.01" name="listingApptConversion" value={formData.listingApptConversion} onChange={handleChange} placeholder={
                     experiencePresets[formData.experienceLevel]?.listingApptToListing || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Buyer Sold Conversion Ratio (%)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">9. What is Your Buyer Sold Conversion Ratio (%)</label>
                 <input type="number" step="0.01" name="buyerSoldConversion" value={formData.buyerSoldConversion} onChange={handleChange} placeholder={
                     experiencePresets[formData.experienceLevel]?.buyerToSold || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Buyer Appt to Buyer Taken Conversion (%)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">10. What is Your Buyer Appt to Buyer Taken Conversion (%)</label>
                 <input type="number" step="0.01" name="buyerApptConversion" value={formData.buyerApptConversion} onChange={handleChange} placeholder={
                     experiencePresets[formData.experienceLevel]?.buyerApptToBuyer || "Enter %"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
@@ -1138,7 +1138,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Specialist Costs</h2>
             
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Are you planning on paying a listing specialist?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">11. Are you planning on paying a listing specialist?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="payListingSpecialist" value="yes" checked={formData.payListingSpecialist === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1153,7 +1153,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
 
               {formData.payListingSpecialist === 'yes' && (
               <div className="mb-2 ml-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">What % will you pay them on listings?</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">11a. What % will you pay them on listings?</label>
                 {/* ADDED HELPER TEXT */}
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
@@ -1166,7 +1166,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
 
             <div className="mb-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Are you paying a buyer specialist?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">12. Are you paying a buyer specialist?</label>
               {/* ADDED HELPER TEXT */}
               {totalGCI > 0 && (
                 <p className="text-xs text-gray-500 mb-1">
@@ -1190,12 +1190,12 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4">
                 {/* ... inputs ... */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of your buy sides will have a specialist?</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">12a. What % of your buy sides will have a Buyers Agent?</label>
                   <input type="number" step="0.01" name="buyerSpecialistPercent" value={formData.buyerSpecialistPercent} onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of the commission do you pay buy side specialists?</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">12b. What % of the commission do you pay buy side specialists?</label>
                   <input
                     type="number"
                     step="0.01"
