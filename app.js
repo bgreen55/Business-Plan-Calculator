@@ -541,13 +541,13 @@ const RealEstateBusinessPlan = () => {
               
                 {/* Centered Title */}
                 <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
-                  Real Estate Business Plan Calculator
+                  The Economic Model
                 </h1>
               
                 {/* Logo + Slogan */}
                 <div className="absolute right-0 top-1/2 transform -translate-y-1/2 text-right">
                   <img
-                    src="/public/kwsuccess.png"
+                    src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png"
                     alt="KW Success Realty Logo"
                     className="w-20 h-auto mx-auto"
                   />
