@@ -525,6 +525,8 @@ const RealEstateBusinessPlan = () => {
 
             {/* The Economic Model Card */}
             <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
+              
+              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
               <div className="flex justify-between items-center mb-4">
                 <div></div>
                 <div className="text-right">
@@ -532,7 +534,6 @@ const RealEstateBusinessPlan = () => {
                   <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
                 </div>
               </div>
-              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
               
               <div className="mb-6">
                 <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
