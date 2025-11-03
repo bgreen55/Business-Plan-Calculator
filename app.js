@@ -667,127 +667,129 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 )}
                 <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
             </div>
-                      <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
-              <div className="space-y-2">
-                {costOfSales.listingSpecialist > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Listing Specialist</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
-                  </div>
-                )}
-                {costOfSales.buyerSpecialist > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Buyer Specialist</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
-                  </div>
-                )}
-                {costOfSales.referralFees > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Referral Fees</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
-                  </div>
-                )}
-                {costOfSales.closingGifts > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Closing Gifts</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
-                  </div>
-                )}
-                {costOfSales.tc > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Transaction Coordinator</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
-                  </div>
-                )}
-                {costOfSales.kwCares > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">KW Cares</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
-                  </div>
-                )}
-                {costOfSales.other > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Other Cost of Sale</span>
-                    <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
-                  </div>
-               )}
-                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                  <span className="text-gray-800">Total Cost of Sales</span>
-                  <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
-                </div>
-              </div>
-            </div>
+                      
+           <div className="mb-8">
+            <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
+            <div className="space-y-2">
+              {costOfSales.listingSpecialist > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Listing Specialist</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+                </div>
+              )}
+              {costOfSales.buyerSpecialist > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Buyer Specialist</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                </div>
+              )}
+              {costOfSales.referralFees > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Referral Fees</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
+                </div>
+              )}
+              {costOfSales.closingGifts > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Closing Gifts</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
+                </div>
+              )}
+              {costOfSales.tc > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Transaction Coordinator</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
+                </div>
+              )}
+              {costOfSales.kwCares > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">KW Cares</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
+                </div>
+              )}
+              {costOfSales.other > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Other Cost of Sale</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
+                </div>
+              )}
+              <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                <span className="text-gray-800">Total Cost of Sales</span>
+                <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
+              </div>
+            </div>
+          </div>
 
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
-              <div className="space-y-2">
-                {opExpenses.compensation > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Compensation/Salary</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
-                  </div>
-                )}
-                {opExpenses.leadGen > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Lead Generation</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
-                  </div>
-                )}
-                {opExpenses.occupancy > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Occupancy</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
-                  </div>
-                )}
-                {opExpenses.education > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Education & Coaching</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
-                  </div>
-                )}
-                {opExpenses.supplies > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Supplies & Office</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
-                  </div>
-                )}
-                {opExpenses.communication > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Communication & Tech</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
-                  </div>
-                )}
-                {opExpenses.auto > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Auto</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
-                  </div>
-                )}
-                {opExpenses.equipment > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Equipment</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
-                  </div>
-                )}
-                {opExpenses.insurance > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Insurance</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
-                  </div>
-                )}
-                {opExpenses.other > 0 && (
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-700">Other Expenses</span>
-                    <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                  <span className="text-gray-800">Total Operating Expenses</span>
-                  <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
-                </div>
-              </div>
-            </div>
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
+            <div className="space-y-2">
+              {opExpenses.compensation > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Compensation/Salary</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
+                </div>
+              )}
+              {opExpenses.leadGen > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Lead Generation</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
+                </div>
+              )}
+              {opExpenses.occupancy > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Occupancy</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
+                </div>
+              )}
+              {opExpenses.education > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Education & Coaching</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
+                </div>
+              )}
+              {opExpenses.supplies > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Supplies & Office</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
+                </div>
+              )}
+              {opExpenses.communication > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Communication & Tech</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
+                </div>
+              )}
+              {opExpenses.auto > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Auto</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
+                </div>
+              )}
+              {opExpenses.equipment > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Equipment</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
+                </div>
+              )}
+              {opExpenses.insurance > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Insurance</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
+                </div>
+              )}
+              {opExpenses.other > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Other Expenses</span>
+                  <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
+                </div>
+              )}
+              <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                <span className="text-gray-800">Total Operating Expenses</span>
+                <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
+              </div>
+            </div>
+          </div>
+            
  
 
               <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
@@ -819,8 +821,6 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   </p>
                 </div>
               </div>
-
-              
 
               <div className="mb-6">
                 <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
@@ -958,8 +958,6 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
       </>
     );
   }
-
-
 
                      
   return (
@@ -1164,53 +1162,6 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
             )}
           </section>
-
-{/*
-            {formData.payListingSpecialist === 'yes' && (
-              <div className="mb-4 ml-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">What % will you pay them on listings?</label>
-                <input type="number" step="0.01" name="listingSpecialistPercent" value={formData.listingSpecialistPercent} onChange={handleChange}
-                  className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-            )}
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Are you paying a buyer specialist?</label>
-              <div className="flex gap-4">
-                <label className="flex items-center">
-                  <input type="radio" name="payBuyerSpecialist" value="yes" checked={formData.payBuyerSpecialist === 'yes'} onChange={handleChange} className="mr-2" />
-                  Yes
-                </label>
-                <label className="flex items-center">
-                  <input type="radio" name="payBuyerSpecialist" value="no" checked={formData.payBuyerSpecialist === 'no'} onChange={handleChange} className="mr-2" />
-                  No
-                </label>
-              </div>
-            </div>
-            
-            {formData.payBuyerSpecialist === 'yes' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of your buy sides will have a specialist?</label>
-                  <input type="number" step="0.01" name="buyerSpecialistPercent" value={formData.buyerSpecialistPercent} onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of the commission do you pay buy side specialists?</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    name="buyerSpecialistCommission"
-                    value={formData.buyerSpecialistCommission}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-            )}
-          </section>
-
-*/}
             
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Additional Transaction Costs</h2>
@@ -1339,62 +1290,6 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
           </section>
 
-{/*          <section>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Compensation/Salary Expense ($)</label>
-                <input type="number" name="compensationExpense" value={formData.compensationExpense} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Lead Generation ($)</label>
-                <input type="number" name="leadGeneration" value={formData.leadGeneration} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Occupancy ($)</label>
-                <input type="number" name="occupancy" value={formData.occupancy} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Education and Coaching ($)</label>
-                <input type="number" name="educationCoaching" value={formData.educationCoaching} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Supplies and Office Expenses ($)</label>
-                <input type="number" name="suppliesOffice" value={formData.suppliesOffice} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Communication and Tech ($)</label>
-                <input type="number" name="communicationTech" value={formData.communicationTech} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Auto ($)</label>
-                <input type="number" name="auto" value={formData.auto} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Equipment ($)</label>
-                <input type="number" name="equipment" value={formData.equipment} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Insurance ($)</label>
-                <input type="number" name="insurance" value={formData.insurance} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Other Expense ($)</label>
-                <input type="number" name="otherExpense" value={formData.otherExpense} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-            </div>
-          </section>
-*/}
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
