@@ -1013,17 +1013,18 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 py-8 px-4 form-container">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
 
-        <div className="mb-8 relative">
-          <h1 className="text-3xl font-bold text-gray-800">
-            Real Estate Business Plan Calculator
-          </h1>
-          <p className="text-gray-600 mb-8">Plan your year with confidence</p>          
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">
+              Real Estate Business Plan Calculator
+            </h1>
+            <p className="text-gray-600 mb-8">Plan your year with confidence</p>   
+          </div>
           <div className="text-right">
             <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
             <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
           </div>
         </div>
-
         
         <div className="space-y-6">
           <section className="border-b pb-6">
