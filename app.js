@@ -14,6 +14,10 @@ const RealEstateBusinessPlan = () => {
     listingApptConversion: '',
     buyerSoldConversion: '',
     buyerApptConversion: '',
+    hasCapFee: 'no',
+    capPercent: '',
+    capAmount: '',
+    hasRoyalty: 'no',
     payListingSpecialist: 'no',
     listingSpecialistPercent: '',
     payBuyerSpecialist: 'no',
@@ -136,7 +140,10 @@ const RealEstateBusinessPlan = () => {
       closingGifts: 0,
       tc: 0,
       kwCares: 0,
-      other: 0
+      other: 0,
+      capFee: 0,
+      royalty: 0,
+      eo: 0
     };
 
     if (formData.payListingSpecialist === 'yes') {
@@ -173,6 +180,31 @@ const RealEstateBusinessPlan = () => {
 
     if (formData.otherCostOfSale === 'yes') {
       costs.other = (parseFloat(formData.otherCostAmount) || 0) * goalTrans;
+    }
+
+    // Cap Fee Calculation
+    if (formData.hasCapFee === 'yes') {
+      const capPercent = parseFloat(formData.capPercent) || 0;
+      const capAmount = parseFloat(formData.capAmount) || 0;
+      const avgComm = calculateValues().avgCommissionDollar;
+      const perTransactionCap = avgComm * (capPercent / 100);
+      const totalBeforeCap = perTransactionCap * goalTrans;
+      costs.capFee = Math.min(totalBeforeCap, capAmount);
+    }
+
+    // Royalty Calculation
+    if (formData.hasRoyalty === 'yes') {
+      const avgComm = calculateValues().avgCommissionDollar;
+      const perTransactionRoyalty = avgComm * 0.06; // 6%
+      const totalBeforeMax = perTransactionRoyalty * goalTrans;
+      costs.royalty = Math.min(totalBeforeMax, 3000);
+    }
+
+    // E&O Calculation
+    if (goalTrans > 0) {
+      const firstTwo = Math.min(goalTrans, 2) * 105;
+      const remaining = Math.max(0, goalTrans - 2) * 35;
+      costs.eo = Math.min(firstTwo + remaining, 805);
     }
 
     const totalCostOfSales = Object.values(costs).reduce((a, b) => a + b, 0);
@@ -707,6 +739,24 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
                 </div>
               )}
+              {costs.capFee > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Cap Fee</span>
+                  <span className="font-semibold">${formatCurrency(costs.capFee)}</span>
+                </div>
+              )}
+              {costs.royalty > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Royalty Fee</span>
+                  <span className="font-semibold">${formatCurrency(costs.royalty)}</span>
+                </div>
+              )}
+              {costs.eo > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">E&O Insurance</span>
+                  <span className="font-semibold">${formatCurrency(costs.eo)}</span>
+                </div>
+              )}
               {costOfSales.other > 0 && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-700">Other Cost of Sale</span>
@@ -1106,7 +1156,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
 
               {formData.payListingSpecialist === 'yes' && (
-              <div className="mb-4 ml-4">
+              <div className="mb-2 ml-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">What % will you pay them on listings?</label>
                 {/* ADDED HELPER TEXT */}
                 {totalGCI > 0 && (
@@ -1119,7 +1169,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
             )}
 
-            <div className="mb-4">
+            <div className="mb-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Are you paying a buyer specialist?</label>
               {/* ADDED HELPER TEXT */}
               {totalGCI > 0 && (
@@ -1268,6 +1318,49 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
 
             <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Do you pay a cap fee?</label>
+              <div className="flex gap-4">
+                <label className="flex items-center">
+                  <input type="radio" name="hasCapFee" value="yes" checked={formData.hasCapFee === 'yes'} onChange={handleChange} className="mr-2" />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input type="radio" name="hasCapFee" value="no" checked={formData.hasCapFee === 'no'} onChange={handleChange} className="mr-2" />
+                  No
+                </label>
+              </div>
+            </div>
+            
+            {formData.hasCapFee === 'yes' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">What % is taken from each transaction?</label>
+                  <input type="number" step="0.01" name="capPercent" value={formData.capPercent} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Cap amount ($)</label>
+                  <input type="number" name="capAmount" value={formData.capAmount} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+              </div>
+            )}
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Do you pay a royalty fee? (6% per transaction, max $3000)</label>
+              <div className="flex gap-4">
+                <label className="flex items-center">
+                  <input type="radio" name="hasRoyalty" value="yes" checked={formData.hasRoyalty === 'yes'} onChange={handleChange} className="mr-2" />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input type="radio" name="hasRoyalty" value="no" checked={formData.hasRoyalty === 'no'} onChange={handleChange} className="mr-2" />
+                  No
+                </label>
+              </div>
+            </div>
+  
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">Any other cost of sale?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
@@ -1295,7 +1388,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
             <div className="text-left ml-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div>   
                   <label className="block text-sm font-medium text-gray-700 mb-1">Compensation/Salary Expense ($)</label>
                   {totalGCI > 0 && (
