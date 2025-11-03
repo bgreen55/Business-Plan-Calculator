@@ -1217,9 +1217,26 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 Model Recommends <span className="font-semibold">{formatPercent(recommendedPercentages.otherCOS)}</span> (${formatCurrency(recommendedDollars.otherCOS)}) for all items in this section combined.
               </p>
             )}
+
+            <div className="mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Cap Fee</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">What % is taken from each transaction?</label>
+                  <input type="number" step="0.01" name="capPercent" value={formData.capPercent} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                      
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Cap amount ($)</label>
+                  <input type="number" name="capAmount" value={formData.capAmount} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+              </div>
+            </div>
             
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Will any of your transactions have a referral fee?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">13. Will any of your transactions have a referral fee?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="hasReferralFees" value="yes" checked={formData.hasReferralFees === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1235,12 +1252,12 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             {formData.hasReferralFees === 'yes' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">How many referral fees will you pay?</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">13a. How many referral fees will you pay?</label>
                   <input type="number" name="referralCount" value={formData.referralCount} onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % do you pay per referral?</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">13b. What % do you pay per referral?</label>
                   <input type="number" step="0.01" name="referralPercent" value={formData.referralPercent} onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
@@ -1248,7 +1265,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Will you provide closing gifts?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">14. Will you provide closing gifts?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="providesClosingGifts" value="yes" checked={formData.providesClosingGifts === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1263,14 +1280,14 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             
             {formData.providesClosingGifts === 'yes' && (
               <div className="mb-4 ml-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">What is your budget for closing gifts? ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">14a. What is your budget for closing gifts? ($)</label>
                 <input type="number" name="closingGiftBudget" value={formData.closingGiftBudget} onChange={handleChange}
                   className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             )}
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Will you pay a transaction coordinator?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">15. Will you pay a transaction coordinator?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="payTC" value="yes" checked={formData.payTC === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1285,14 +1302,14 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             
             {formData.payTC === 'yes' && (
               <div className="mb-4 ml-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">How much will you pay a TC per transaction? ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">15a. How much will you pay a TC per transaction? ($)</label>
                 <input type="number" name="tcAmount" value={formData.tcAmount} onChange={handleChange}
                   className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             )}
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">KW Success Cares contribution?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">16. KW Success Cares contribution?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="kwCares" value="yes" checked={formData.kwCares === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1305,24 +1322,15 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Cap Fee</label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % is taken from each transaction?</label>
-                  <input type="number" step="0.01" name="capPercent" value={formData.capPercent} onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Cap amount ($)</label>
-                  <input type="number" name="capAmount" value={formData.capAmount} onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
+            {formData.kwCares === 'yes' && (
+              <div className="mb-4 ml-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">16a. KW Success Cares Amount Per Transaction? ($)</label>
+                <input type="number" name="tcAmount" value={formData.kwCares} onChange={handleChange}
+                  className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
-            </div>
   
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Any other cost of sale?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">17. Any other cost of sale?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="otherCostOfSale" value="yes" checked={formData.otherCostOfSale === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1337,7 +1345,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             
             {formData.otherCostOfSale === 'yes' && (
               <div className="ml-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">How much per transaction? ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">17a. How much per transaction? ($)</label>
                 <input type="number" name="otherCostAmount" value={formData.otherCostAmount} onChange={handleChange}
                   className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
