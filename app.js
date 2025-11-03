@@ -1347,7 +1347,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
             <div className="text-left ml-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2">
                 <div>   
                   <label className="block text-sm font-medium text-gray-700 mb-0.5">Compensation/Salary Expense ($)</label>
                   {totalGCI > 0 && (
