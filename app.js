@@ -526,15 +526,6 @@ const RealEstateBusinessPlan = () => {
             {/* The Economic Model Card */}
             <div className="bg-white rounded-lg shadow-xl p-8 mb-8 print-card">
               
-            {/*   <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Economic Model</h1>
-              <div className="flex justify-between items-center mb-4">
-                <div></div>
-                <div className="text-right">
-                  <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
-                  <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
-                </div>
-              </div>  */}
-              
               <div className="flex justify-between items-center mb-8 relative">      
                 {/* Invisible spacer to keep title centered */}
                 <div className="w-24 md:w-32"></div>
@@ -654,15 +645,27 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
 
             {/* The Budget Model Card */}
-            <div className="bg-white rounded-lg shadow-xl p-8 mb-8 budget-model-card print-card">
-              <div className="flex justify-between items-center mb-4">
-                <div></div>
-                <div className="text-right">
-                  <img src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png" alt="KW Success Realty Logo" className="w-24 h-auto inline-block" />
-                  <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
+            <div className="flex justify-between items-center mb-8 relative">      
+                {/* Invisible spacer to keep title centered */}
+                <div className="w-24 md:w-32"></div>
+              
+                {/* Centered Title */}
+                <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
+                  The Budget Model
+                </h1>
+              
+                {/* Logo + Slogan */}
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 text-right">
+                  <img
+                    src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png"
+                    alt="KW Success Realty Logo"
+                    className="w-20 h-auto mx-auto"
+                  />
+                  <p className="text-xs text-gray-600 italic mt-1 whitespace-nowrap">
+                    Your Goals = Our Goals
+                  </p>
                 </div>
               </div>
-              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Budget Model</h1>
               
      <div className="mb-6">
                 <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
@@ -847,6 +850,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
 
             {/* NEW LEAD GEN MODEL CARD */}
+            {/*
             <div className="bg-white rounded-lg shadow-xl p-8 lead-gen-model-card print-card">
               <div className="flex justify-between items-center mb-4">
                 <div></div>
@@ -855,7 +859,28 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   <p className="text-sm text-gray-600 mt-1 italic">Your Goals = Our Goals</p>
                 </div>
               </div>
-              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>
+              <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">The Lead Generation Model</h1>  */}
+
+              <div className="mb-8 relative">      
+                {/* Centered Title */}
+                <h1 className="text-3xl font-bold text-gray-800 text-center flex-1">
+                  The Lead Generation Model
+                </h1>
+              
+                {/* Logo + Slogan */}
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 text-right">
+                  <img
+                    src="https://bgreen55.github.io/Business-Plan-Calculator/public/kwsuccess.png"
+                    alt="KW Success Realty Logo"
+                    className="w-20 h-auto mx-auto"
+                  />
+                  <p className="text-xs text-gray-600 italic mt-1 whitespace-nowrap">
+                    Your Goals = Our Goals
+                  </p>
+                </div>
+              </div>
+
+              
 
               <div className="mb-6">
                 <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
