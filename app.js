@@ -14,10 +14,8 @@ const RealEstateBusinessPlan = () => {
     listingApptConversion: '',
     buyerSoldConversion: '',
     buyerApptConversion: '',
-    hasCapFee: 'no',
     capPercent: '',
     capAmount: '',
-    hasRoyalty: 'no',
     payListingSpecialist: 'no',
     listingSpecialistPercent: '',
     payBuyerSpecialist: 'no',
@@ -183,22 +181,20 @@ const RealEstateBusinessPlan = () => {
     }
 
     // Cap Fee Calculation
-    if (formData.hasCapFee === 'yes') {
-      const capPercent = parseFloat(formData.capPercent) || 0;
-      const capAmount = parseFloat(formData.capAmount) || 0;
+    const capPercent = parseFloat(formData.capPercent) || 0;
+    const capAmount = parseFloat(formData.capAmount) || 0;
+    if (capPercent > 0 && capAmount > 0) {
       const avgComm = calculateValues().avgCommissionDollar;
       const perTransactionCap = avgComm * (capPercent / 100);
       const totalBeforeCap = perTransactionCap * goalTrans;
       costs.capFee = Math.min(totalBeforeCap, capAmount);
     }
 
-    // Royalty Calculation
-    if (formData.hasRoyalty === 'yes') {
-      const avgComm = calculateValues().avgCommissionDollar;
-      const perTransactionRoyalty = avgComm * 0.06; // 6%
-      const totalBeforeMax = perTransactionRoyalty * goalTrans;
-      costs.royalty = Math.min(totalBeforeMax, 3000);
-    }
+    // Royalty Calculation (always calculated)
+    const avgComm = calculateValues().avgCommissionDollar;
+    const perTransactionRoyalty = avgComm * 0.06; // 6%
+    const totalBeforeMax = perTransactionRoyalty * goalTrans;
+    costs.royalty = Math.min(totalBeforeMax, 3000);
 
     // E&O Calculation
     if (goalTrans > 0) {
@@ -1308,31 +1304,10 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 </label>
               </div>
             </div>
-            
-            {formData.kwCares === 'yes' && (
-              <div className="mb-4 ml-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Amount per contribution ($)</label>
-                <input type="number" name="kwCaresAmount" value={formData.kwCaresAmount} onChange={handleChange}
-                  className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-            )}
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Do you pay a cap fee?</label>
-              <div className="flex gap-4">
-                <label className="flex items-center">
-                  <input type="radio" name="hasCapFee" value="yes" checked={formData.hasCapFee === 'yes'} onChange={handleChange} className="mr-2" />
-                  Yes
-                </label>
-                <label className="flex items-center">
-                  <input type="radio" name="hasCapFee" value="no" checked={formData.hasCapFee === 'no'} onChange={handleChange} className="mr-2" />
-                  No
-                </label>
-              </div>
-            </div>
-            
-            {formData.hasCapFee === 'yes' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Cap Fee</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">What % is taken from each transaction?</label>
                   <input type="number" step="0.01" name="capPercent" value={formData.capPercent} onChange={handleChange}
@@ -1344,21 +1319,8 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
               </div>
-            )}
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Do you pay a royalty fee? (6% per transaction, max $3000)</label>
-              <div className="flex gap-4">
-                <label className="flex items-center">
-                  <input type="radio" name="hasRoyalty" value="yes" checked={formData.hasRoyalty === 'yes'} onChange={handleChange} className="mr-2" />
-                  Yes
-                </label>
-                <label className="flex items-center">
-                  <input type="radio" name="hasRoyalty" value="no" checked={formData.hasRoyalty === 'no'} onChange={handleChange} className="mr-2" />
-                  No
-                </label>
-              </div>
             </div>
+            
   
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">Any other cost of sale?</label>
