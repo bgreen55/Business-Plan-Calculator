@@ -1294,105 +1294,107 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
 
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Compensation/Salary Expense ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.compensation)} (${formatCurrency(recommendedDollars.compensation)})
-                  </p>
-                )}
-                <input type="number" name="compensationExpense" value={formData.compensationExpense} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Lead Generation ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.leadGen)} (${formatCurrency(recommendedDollars.leadGen)})
-                  </p>
-                )}
-                <input type="number" name="leadGeneration" value={formData.leadGeneration} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Occupancy ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.occupancy)} (${formatCurrency(recommendedDollars.occupancy)})
-                  </p>
-                )}
-                <input type="number" name="occupancy" value={formData.occupancy} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Education and Coaching ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.education)} (${formatCurrency(recommendedDollars.education)})
-                  </p>
-                )}
-                <input type="number" name="educationCoaching" value={formData.educationCoaching} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Supplies and Office Expenses ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.supplies)} (${formatCurrency(recommendedDollars.supplies)})
-                  </p>
-                )}
-                <input type="number" name="suppliesOffice" value={formData.suppliesOffice} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Communication and Tech ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.communication)} (${formatCurrency(recommendedDollars.communication)})
-                  </p>
-                )}
-                <input type="number" name="communicationTech" value={formData.communicationTech} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Auto ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.auto)} (${formatCurrency(recommendedDollars.auto)})
-                  </p>
-                )}
-                <input type="number" name="auto" value={formData.auto} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Equipment ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.equipment)} (${formatCurrency(recommendedDollars.equipment)})
-                  </p>
-                )}
-                <input type="number" name="equipment" value={formData.equipment} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Insurance ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.insurance)} (${formatCurrency(recommendedDollars.insurance)})
-                  </p>
-                )}
-                <input type="number" name="insurance" value={formData.insurance} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Other Expense ($)</label>
-                {totalGCI > 0 && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Rec: {formatPercent(recommendedPercentages.other)} (${formatCurrency(recommendedDollars.other)})
-                  </p>
-                )}
-                <input type="number" name="otherExpense" value={formData.otherExpense} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            <div className="text-left ml-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/*           <div>    */}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Compensation/Salary Expense ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.compensation)} (${formatCurrency(recommendedDollars.compensation)})
+                    </p>
+                  )}
+                  <input type="number" name="compensationExpense" value={formData.compensationExpense} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Lead Generation ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.leadGen)} (${formatCurrency(recommendedDollars.leadGen)})
+                    </p>
+                  )}
+                  <input type="number" name="leadGeneration" value={formData.leadGeneration} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Occupancy ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.occupancy)} (${formatCurrency(recommendedDollars.occupancy)})
+                    </p>
+                  )}
+                  <input type="number" name="occupancy" value={formData.occupancy} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Education and Coaching ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.education)} (${formatCurrency(recommendedDollars.education)})
+                    </p>
+                  )}
+                  <input type="number" name="educationCoaching" value={formData.educationCoaching} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Supplies and Office Expenses ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.supplies)} (${formatCurrency(recommendedDollars.supplies)})
+                    </p>
+                  )}
+                  <input type="number" name="suppliesOffice" value={formData.suppliesOffice} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Communication and Tech ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.communication)} (${formatCurrency(recommendedDollars.communication)})
+                    </p>
+                  )}
+                  <input type="number" name="communicationTech" value={formData.communicationTech} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Auto ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.auto)} (${formatCurrency(recommendedDollars.auto)})
+                    </p>
+                  )}
+                  <input type="number" name="auto" value={formData.auto} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Equipment ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.equipment)} (${formatCurrency(recommendedDollars.equipment)})
+                    </p>
+                  )}
+                  <input type="number" name="equipment" value={formData.equipment} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Insurance ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.insurance)} (${formatCurrency(recommendedDollars.insurance)})
+                    </p>
+                  )}
+                  <input type="number" name="insurance" value={formData.insurance} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Other Expense ($)</label>
+                  {totalGCI > 0 && (
+                    <p className="text-xs text-gray-500 mb-1">
+                      Rec: {formatPercent(recommendedPercentages.other)} (${formatCurrency(recommendedDollars.other)})
+                    </p>
+                  )}
+                  <input type="number" name="otherExpense" value={formData.otherExpense} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
           </section>
