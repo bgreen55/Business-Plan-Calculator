@@ -1349,9 +1349,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <div className="text-left ml-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>   
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Compensation/Salary Expense ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Compensation/Salary Expense ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.compensation)} (${formatCurrency(recommendedDollars.compensation)})
                     </p>
                   )}
@@ -1359,9 +1359,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Lead Generation ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Lead Generation ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.leadGen)} (${formatCurrency(recommendedDollars.leadGen)})
                     </p>
                   )}
@@ -1369,9 +1369,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Occupancy ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Occupancy ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.occupancy)} (${formatCurrency(recommendedDollars.occupancy)})
                     </p>
                   )}
@@ -1379,9 +1379,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Education and Coaching ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Education and Coaching ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.education)} (${formatCurrency(recommendedDollars.education)})
                     </p>
                   )}
@@ -1389,9 +1389,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Supplies and Office Expenses ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Supplies and Office Expenses ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.supplies)} (${formatCurrency(recommendedDollars.supplies)})
                     </p>
                   )}
@@ -1399,9 +1399,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Communication and Tech ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Communication and Tech ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.communication)} (${formatCurrency(recommendedDollars.communication)})
                     </p>
                   )}
@@ -1409,9 +1409,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Auto ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Auto ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.auto)} (${formatCurrency(recommendedDollars.auto)})
                     </p>
                   )}
@@ -1419,9 +1419,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Equipment ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Equipment ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.equipment)} (${formatCurrency(recommendedDollars.equipment)})
                     </p>
                   )}
@@ -1429,9 +1429,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Insurance ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Insurance ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.insurance)} (${formatCurrency(recommendedDollars.insurance)})
                     </p>
                   )}
@@ -1439,9 +1439,9 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-0.5">Other Expense ($)</label>
+                  <label className="block text-sm font-medium text-gray-700">Other Expense ($)</label>
                   {totalGCI > 0 && (
-                    <p className="text-xs text-gray-500 mb-0.5">
+                    <p className="text-xs text-gray-500 mb-1">
                       Rec: {formatPercent(recommendedPercentages.other)} (${formatCurrency(recommendedDollars.other)})
                     </p>
                   )}
