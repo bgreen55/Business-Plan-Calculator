@@ -279,33 +279,30 @@ const RealEstateBusinessPlan = () => {
   };
 
   const { avgCommissionDollar, totalGCI } = calculateValues();
+  const recommendedPercentages = getRecommendedPercentages(totalGCI);
+
+  // Calculate recommended dollar amounts
+  const recommendedDollars = {
+    listingSpecialist: totalGCI * (recommendedPercentages.listingSpecialist / 100),
+    buyerSpecialist: totalGCI * (recommendedPercentages.buyerSpecialist / 100),
+    otherCOS: totalGCI * (recommendedPercentages.otherCOS / 100),
+    compensation: totalGCI * (recommendedPercentages.compensation / 100),
+    leadGen: totalGCI * (recommendedPercentages.leadGen / 100),
+    occupancy: totalGCI * (recommendedPercentages.occupancy / 100),
+    education: totalGCI * (recommendedPercentages.education / 100),
+    supplies: totalGCI * (recommendedPercentages.supplies / 100),
+    communication: totalGCI * (recommendedPercentages.communication / 100),
+    auto: totalGCI * (recommendedPercentages.auto / 100),
+    equipment: totalGCI * (recommendedPercentages.equipment / 100),
+    insurance: totalGCI * (recommendedPercentages.insurance / 100),
+    other: totalGCI * (recommendedPercentages.other / 100),
+  };
+  
 
   if (showResults) {
     const costOfSales = calculateCostOfSales();
     const opExpenses = calculateOperatingExpenses();
     const totalOpExpenses = Object.values(opExpenses).reduce((a, b) => a + b, 0);
-
-    // This sums up all your other costs to match the model's "Other COS" category
-    const otherCOSSum = costOfSales.referralFees + costOfSales.closingGifts + costOfSales.tc + costOfSales.kwCares + costOfSales.other;
-    
-    const recommendedPercentages = getRecommendedPercentages(totalGCI);
-    const actualPercentages = {
-      // Cost of Sales
-      listingSpecialist: totalGCI > 0 ? (costOfSales.listingSpecialist / totalGCI) * 100 : 0,
-      buyerSpecialist: totalGCI > 0 ? (costOfSales.buyerSpecialist / totalGCI) * 100 : 0,
-      otherCOS: totalGCI > 0 ? (otherCOSSum / totalGCI) * 100 : 0,
-      //Operating Expenses
-      compensation: totalGCI > 0 ? (opExpenses.compensation / totalGCI) * 100 : 0,
-      leadGen: totalGCI > 0 ? (opExpenses.leadGen / totalGCI) * 100 : 0,
-      occupancy: totalGCI > 0 ? (opExpenses.occupancy / totalGCI) * 100 : 0,
-      education: totalGCI > 0 ? (opExpenses.education / totalGCI) * 100 : 0,
-      supplies: totalGCI > 0 ? (opExpenses.supplies / totalGCI) * 100 : 0,
-      communication: totalGCI > 0 ? (opExpenses.communication / totalGCI) * 100 : 0,
-      auto: totalGCI > 0 ? (opExpenses.auto / totalGCI) * 100 : 0,
-      equipment: totalGCI > 0 ? (opExpenses.equipment / totalGCI) * 100 : 0,
-      insurance: totalGCI > 0 ? (opExpenses.insurance / totalGCI) * 100 : 0,
-      other: totalGCI > 0 ? (opExpenses.other / totalGCI) * 100 : 0,
-    };
     
     const netIncome = totalGCI - costOfSales.total - totalOpExpenses;
     
@@ -663,179 +660,135 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 </div>
               </div>
               
-     <div className="mb-6">
+            <div className="mb-6">
                 <p className="text-xl text-gray-700"><span className="font-semibold">Agent:</span> {formData.name}</p>
                 {formData.teamName && (
                   <p className="text-xl text-gray-700"><span className="font-semibold">Team Name:</span> {formData.teamName}</p>
                 )}
                 <p className="text-lg text-gray-600 mt-2">GCI Goal: <span className="font-semibold text-blue-600">${formatCurrency(totalGCI)}</span></p>
-        </div>
-          <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
-              
-              {/* --- HEADER ROW --- */}
-              <div className="flex justify-between py-1 text-sm font-semibold text-gray-600 border-b print:hidden">
-                <span>Category</span>
-                <div className="flex gap-4 w-1/2 justify-end">
-                  <span className="w-28 text-right">Your Budget</span>
-                  <span className="w-20 text-right">Actual %</span>
-                  <span className="w-20 text-right">Rec. %</span>
-                </div>
-              </div>
-
-              {/* --- EXPENSE LIST --- */}
-              <div className="space-y-2">
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Listing Specialist</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.listingSpecialist)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.listingSpecialist)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Buyer Specialist</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.buyerSpecialist)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.buyerSpecialist)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Other Cost of Sales</span>
-                  {/* This row combines all your other COS fields to compare against the model */}
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(otherCOSSum)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.otherCOS)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.otherCOS)}</span>
-                  </div>
-                </div>
-
-                {/* --- TOTAL ROW --- */}
-                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                  <span className="text-gray-800">Total Cost of Sales</span>
-                  <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
-                </div>
-              </div>
             </div>
-              
+                      <div className="mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Cost of Sales</h2>
+              <div className="space-y-2">
+                {costOfSales.listingSpecialist > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Listing Specialist</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.listingSpecialist)}</span>
+                  </div>
+                )}
+                {costOfSales.buyerSpecialist > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Buyer Specialist</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.buyerSpecialist)}</span>
+                  </div>
+                )}
+                {costOfSales.referralFees > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Referral Fees</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.referralFees)}</span>
+                  </div>
+                )}
+                {costOfSales.closingGifts > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Closing Gifts</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.closingGifts)}</span>
+                  </div>
+                )}
+                {costOfSales.tc > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Transaction Coordinator</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.tc)}</span>
+                  </div>
+                )}
+                {costOfSales.kwCares > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">KW Cares</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
+                  </div>
+                )}
+                {costOfSales.other > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Other Cost of Sale</span>
+                    <span className="font-semibold">${formatCurrency(costOfSales.other)}</span>
+                  </div>
+               )}
+                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                  <span className="text-gray-800">Total Cost of Sales</span>
+                  <span className="text-red-600">${formatCurrency(costOfSales.total)}</span>
+                </div>
+              </div>
+            </div>
 
-        <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
-              
-              {/* --- HEADER ROW --- */}
-              <div className="flex justify-between py-1 text-sm font-semibold text-gray-600 border-b print:hidden">
-                <span>Category</span>
-                <div className="flex gap-4 w-1/2 justify-end">
-                  <span className="w-28 text-right">Your Budget</span>
-                  <span className="w-20 text-right">Actual %</span>
-                  <span className="w-20 text-right">Rec. %</span>
-                </div>
-              </div>
-
-              {/* --- EXPENSE LIST --- */}
-              <div className="space-y-2">
-                
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Compensation/Salary</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.compensation)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.compensation)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.compensation)}</span>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Lead Generation</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.leadGen)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.leadGen)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Occupancy</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.occupancy)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.occupancy)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Education & Coaching</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.education)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.education)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.education)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Supplies & Office</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.supplies)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.supplies)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.supplies)}</span>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Communication & Tech</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.communication)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.communication)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.communication)}</span>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Auto</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.auto)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.auto)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.auto)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Equipment</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.equipment)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.equipment)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.equipment)}</span>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Insurance</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.insurance)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.insurance)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.insurance)}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between py-2 items-center">
-                  <span className="text-gray-700">Other Expenses</span>
-                  <div className="flex gap-4 w-1/2 justify-end">
-                    <span className="w-28 text-right font-semibold">${formatCurrency(opExpenses.other)}</span>
-                    <span className="w-20 text-right font-semibold">{formatPercent(actualPercentages.other)}</span>
-                    <span className="w-20 text-right text-gray-500">{formatPercent(recommendedPercentages.other)}</span>
-                  </div>
-                </div>
-
-                {/* --- TOTAL ROW --- */}
-                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
-                  <span className="text-gray-800">Total Operating Expenses</span>
-                  <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
-                </div>
-           </div>
-        </div>
+            <div className="mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">Operating Expenses</h2>
+              <div className="space-y-2">
+                {opExpenses.compensation > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Compensation/Salary</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.compensation)}</span>
+                  </div>
+                )}
+                {opExpenses.leadGen > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Lead Generation</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.leadGen)}</span>
+                  </div>
+                )}
+                {opExpenses.occupancy > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Occupancy</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.occupancy)}</span>
+                  </div>
+                )}
+                {opExpenses.education > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Education & Coaching</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.education)}</span>
+                  </div>
+                )}
+                {opExpenses.supplies > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Supplies & Office</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.supplies)}</span>
+                  </div>
+                )}
+                {opExpenses.communication > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Communication & Tech</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.communication)}</span>
+                  </div>
+                )}
+                {opExpenses.auto > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Auto</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.auto)}</span>
+                  </div>
+                )}
+                {opExpenses.equipment > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Equipment</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.equipment)}</span>
+                  </div>
+                )}
+                {opExpenses.insurance > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Insurance</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.insurance)}</span>
+                  </div>
+                )}
+                {opExpenses.other > 0 && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-700">Other Expenses</span>
+                    <span className="font-semibold">${formatCurrency(opExpenses.other)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between py-2 border-t-2 border-gray-300 font-bold">
+                  <span className="text-gray-800">Total Operating Expenses</span>
+                  <span className="text-red-600">${formatCurrency(totalOpExpenses)}</span>
+                </div>
+              </div>
+            </div>
+ 
 
               <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
                 <div className="flex justify-between items-center">
@@ -1153,7 +1106,66 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                 </label>
               </div>
             </div>
-            
+
+              {formData.payListingSpecialist === 'yes' && (
+              <div className="mb-4 ml-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">What % will you pay them on listings?</label>
+                {/* ADDED HELPER TEXT */}
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Model Rec: {formatPercent(recommendedPercentages.listingSpecialist)} (${formatCurrency(recommendedDollars.listingSpecialist)})
+                  </p>
+                )}
+                <input type="number" step="0.01" name="listingSpecialistPercent" value={formData.listingSpecialistPercent} onChange={handleChange}
+                  className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+            )}
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Are you paying a buyer specialist?</label>
+              {/* ADDED HELPER TEXT */}
+              {totalGCI > 0 && (
+                <p className="text-xs text-gray-500 mb-1">
+                  Model Rec: {formatPercent(recommendedPercentages.buyerSpecialist)} (${formatCurrency(recommendedDollars.buyerSpecialist)})
+                </p>
+              )}
+              <div className="flex gap-4">
+                {/* ... radio buttons ... */}
+                <label className="flex items-center">
+                  <input type="radio" name="payBuyerSpecialist" value="yes" checked={formData.payBuyerSpecialist === 'yes'} onChange={handleChange} className="mr-2" />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input type="radio" name="payBuyerSpecialist" value="no" checked={formData.payBuyerSpecialist === 'no'} onChange={handleChange} className="mr-2" />
+                  No
+                </label>
+              </div>
+            </div>
+            
+            {formData.payBuyerSpecialist === 'yes' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4">
+                {/* ... inputs ... */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of your buy sides will have a specialist?</label>
+                  <input type="number" step="0.01" name="buyerSpecialistPercent" value={formData.buyerSpecialistPercent} onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">What % of the commission do you pay buy side specialists?</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="buyerSpecialistCommission"
+                    value={formData.buyerSpecialistCommission}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+            )}
+          </section>
+
+{/*
             {formData.payListingSpecialist === 'yes' && (
               <div className="mb-4 ml-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">What % will you pay them on listings?</label>
@@ -1198,8 +1210,16 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
           </section>
 
+*/}
+            
           <section className="border-b pb-6">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Additional Transaction Costs</h2>
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Additional Transaction Costs</h2>
+            {/* ADDED HELPER TEXT */}
+            {totalGCI > 0 && (
+              <p className="text-sm text-gray-500 mb-4 -mt-2">
+                Model Recommends <span className="font-semibold">{formatPercent(recommendedPercentages.otherCOS)}</span> (${formatCurrency(recommendedDollars.otherCOS)}) for all items in this section combined.
+              </p>
+            )}
             
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">Will any of your transactions have a referral fee?</label>
@@ -1275,7 +1295,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">KW Cares contribution?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">KW Success Cares contribution?</label>
               <div className="flex gap-4">
                 <label className="flex items-center">
                   <input type="radio" name="kwCares" value="yes" checked={formData.kwCares === 'yes'} onChange={handleChange} className="mr-2" />
@@ -1319,7 +1339,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             )}
           </section>
 
-          <section>
+{/*          <section>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -1374,6 +1394,112 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
             </div>
           </section>
+*/}
+          <section className="border-b pb-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Compensation/Salary Expense ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.compensation)} (${formatCurrency(recommendedDollars.compensation)})
+                  </p>
+                )}
+                <input type="number" name="compensationExpense" value={formData.compensationExpense} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Lead Generation ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.leadGen)} (${formatCurrency(recommendedDollars.leadGen)})
+                  </p>
+                )}
+                <input type="number" name="leadGeneration" value={formData.leadGeneration} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Occupancy ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.occupancy)} (${formatCurrency(recommendedDollars.occupancy)})
+                  </p>
+                )}
+                <input type="number" name="occupancy" value={formData.occupancy} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Education and Coaching ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.education)} (${formatCurrency(recommendedDollars.education)})
+                  </p>
+                )}
+                <input type="number" name="educationCoaching" value={formData.educationCoaching} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Supplies and Office Expenses ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.supplies)} (${formatCurrency(recommendedDollars.supplies)})
+                  </p>
+                )}
+                <input type="number" name="suppliesOffice" value={formData.suppliesOffice} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Communication and Tech ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.communication)} (${formatCurrency(recommendedDollars.communication)})
+                  </p>
+                )}
+                <input type="number" name="communicationTech" value={formData.communicationTech} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Auto ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.auto)} (${formatCurrency(recommendedDollars.auto)})
+                  </p>
+                )}
+                <input type="number" name="auto" value={formData.auto} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Equipment ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.equipment)} (${formatCurrency(recommendedDollars.equipment)})
+                  </p>
+                )}
+                <input type="number" name="equipment" value={formData.equipment} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Insurance ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.insurance)} (${formatCurrency(recommendedDollars.insurance)})
+                  </p>
+                )}
+                <input type="number" name="insurance" value={formData.insurance} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Other Expense ($)</label>
+                {totalGCI > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">
+                    Rec: {formatPercent(recommendedPercentages.other)} (${formatCurrency(recommendedDollars.other)})
+                  </p>
+                )}
+                <input type="number" name="otherExpense" value={formData.otherExpense} onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+            </div>
+          </section>
 
           <section>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Lead Generation Model</h2>
