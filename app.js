@@ -1346,8 +1346,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
 
           <section className="border-b pb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
-            <div className="text-left ml-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      
                 <div>   
                   <label className="block text-sm font-medium text-gray-700">Compensation/Salary Expense ($)</label>
                   {totalGCI > 0 && (
@@ -1358,6 +1357,34 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   <input type="number" name="compensationExpense" value={formData.compensationExpense} onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
+
+
+{/*<section className="border-b pb-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Additional Transaction Costs</h2>
+         
+            {totalGCI > 0 && (
+              <p className="text-sm text-gray-500 mb-4 -mt-2">
+                Model Recommends <span className="font-semibold">{formatPercent(recommendedPercentages.otherCOS)}</span> (${formatCurrency(recommendedDollars.otherCOS)}) for all items in this section combined.
+              </p>
+            )}
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Will any of your transactions have a referral fee?</label>
+              <div className="flex gap-4">
+                <label className="flex items-center">
+                  <input type="radio" name="hasReferralFees" value="yes" checked={formData.hasReferralFees === 'yes'} onChange={handleChange} className="mr-2" />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input type="radio" name="hasReferralFees" value="no" checked={formData.hasReferralFees === 'no'} onChange={handleChange} className="mr-2" />
+                  No
+                </label>
+              </div>
+*/}
+
+
+                      
+                      
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Lead Generation ($)</label>
                   {totalGCI > 0 && (
@@ -1447,9 +1474,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   )}
                   <input type="number" name="otherExpense" value={formData.otherExpense} onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-              </div>
-            </div>
+              </div>
           </section>
                     
 
