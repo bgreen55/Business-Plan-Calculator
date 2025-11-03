@@ -738,19 +738,19 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               {costOfSales.capFee > 0 && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-700">Cap Fee</span>
-                  <span className="font-semibold">${formatCurrency(costs.capFee)}</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.capFee)}</span>
                 </div>
               )}
               {costOfSales.royalty > 0 && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-700">Royalty Fee</span>
-                  <span className="font-semibold">${formatCurrency(costs.royalty)}</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.royalty)}</span>
                 </div>
               )}
               {costOfSales.eo > 0 && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-700">E&O Insurance</span>
-                  <span className="font-semibold">${formatCurrency(costs.eo)}</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.eo)}</span>
                 </div>
               )}
               {costOfSales.other > 0 && (
