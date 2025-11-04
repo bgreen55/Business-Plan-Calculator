@@ -1,3 +1,5 @@
+
+import { saveBusinessPlanToFirebase } from '../utils/saveToFirebase';
 const { useState } = React;
 
 const RealEstateBusinessPlan = () => {
@@ -551,7 +553,30 @@ const RealEstateBusinessPlan = () => {
               
               {/* ADD THIS NEW PRINT BUTTON */}
               <button
-                onClick={() => window.print()}
+                onClick={async () => {
+                  // Save to Firebase before printing
+                  const calculatedData = {
+                    totalGCI,
+                    avgCommissionDollar,
+                    costOfSales,
+                    totalOpExpenses,
+                    netIncome,
+                    opExpenses
+                  };
+                  
+                  const result = await saveBusinessPlanToFirebase(formData, calculatedData);
+                  
+                  if (result.success) {
+                    console.log('Data saved successfully!');
+                    // Optionally show a success message to the user
+                  } else {
+                    console.error('Failed to save data:', result.error);
+                    // Optionally show an error message to the user
+                  }
+                  
+                  // Print regardless of save success
+                  window.print();
+                }}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-colors duration-200"
               >
                 <span>🖨️ Print / Save as PDF</span>
