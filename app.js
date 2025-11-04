@@ -1,5 +1,5 @@
 
-import { saveBusinessPlanToFirebase } from '../utils/saveToFirebase';
+import { saveBusinessPlanToFirebase } from './utils/saveToFirebase.js';
 const { useState } = React;
 
 const RealEstateBusinessPlan = () => {
