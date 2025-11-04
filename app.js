@@ -14,8 +14,8 @@ const RealEstateBusinessPlan = () => {
     listingApptConversion: '',
     buyerSoldConversion: '',
     buyerApptConversion: '',
-    capPercent: '',
-    capAmount: '',
+    capType: '',  //Full or Team
+    teamSplit: '',
     payListingSpecialist: 'no',
     listingSpecialistPercent: '',
     payBuyerSpecialist: 'no',
@@ -140,6 +140,7 @@ const RealEstateBusinessPlan = () => {
       kwCares: 0,
       other: 0,
       capFee: 0,
+      teamSplit: 0,
       royalty: 0,
       eo: 0
     };
@@ -181,13 +182,22 @@ const RealEstateBusinessPlan = () => {
     }
 
     // Cap Fee Calculation
-    const capPercent = parseFloat(formData.capPercent) || 0;
-    const capAmount = parseFloat(formData.capAmount) || 0;
-    if (capPercent > 0 && capAmount > 0) {
-      const avgComm = calculateValues().avgCommissionDollar;
+    if (formData.capType === 'full' || formData.capType === 'team') {
+      const avgComm = calculateValues(formData).avgCommissionDollar;
+      const capPercent = 30;
+      const capAmount = formData.capType === 'full' ? 15000 : 9000;
       const perTransactionCap = avgComm * (capPercent / 100);
       const totalBeforeCap = perTransactionCap * goalTrans;
       costs.capFee = Math.min(totalBeforeCap, capAmount);
+      
+      // Add team split fee separately if team cap is selected
+      if (formData.capType === 'team') {
+        const teamSplitPercent = parseFloat(formData.teamSplit) || 0;
+        if (teamSplitPercent > 0) {
+          const teamSplitPerTransaction = avgComm * (teamSplitPercent / 100);
+          costs.teamSplit = teamSplitPerTransaction * goalTrans;
+        }
+      }
     }
 
     // Royalty Calculation (always calculated)
@@ -748,6 +758,12 @@ const RealEstateBusinessPlan = () => {
                   <span className="font-semibold">${formatCurrency(costOfSales.capFee)}</span>
                 </div>
               )}
+              {costOfSales.teamSplit > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-700">Team Split Fee</span>
+                  <span className="font-semibold">${formatCurrency(costOfSales.teamSplit)}</span>
+                </div>
+              )}
               {costOfSales.royalty > 0 && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-700">Royalty Fee</span>
@@ -1235,19 +1251,45 @@ const RealEstateBusinessPlan = () => {
 
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">Cap Fee</label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">What % is taken from each transaction?</label>
-                  <input type="number" step="0.01" name="capPercent" value={formData.capPercent} onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-                      
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Cap amount ($)</label>
-                  <input type="number" name="capAmount" value={formData.capAmount} onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
+              <div className="flex gap-4 mb-2">
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, capType: 'full' }))}
+                  className={`px-4 py-2 rounded-md border-2 transition-colors ${
+                    formData.capType === 'full'
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
+                  }`}
+                >
+                  Full Cap (30% up to $15k)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, capType: 'team' }))}
+                  className={`px-4 py-2 rounded-md border-2 transition-colors ${
+                    formData.capType === 'team'
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
+                  }`}
+                >
+                  Team Cap (30% up to $9k)
+                </button>
               </div>
+              
+              {formData.capType === 'team' && (
+                <div className="ml-4 mt-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Team Split (%)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="teamSplit"
+                    value={formData.teamSplit}
+                    onChange={handleChange}
+                    placeholder="Enter team split percentage"
+                    className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              )}
             </div>
             
             <div className="mb-4">
