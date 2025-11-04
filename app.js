@@ -731,7 +731,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               )}
               {costOfSales.kwCares > 0 && (
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">KW Cares</span>
+                  <span className="text-gray-700">KW Success Cares</span>
                   <span className="font-semibold">${formatCurrency(costOfSales.kwCares)}</span>
                 </div>
               )}
@@ -1073,12 +1073,12 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">1. Average Sales Price ($)</label>
-                <input type="number" name="avgSalesPrice" value={formData.avgSalesPrice} onChange={handleChange}
+                <input type="number" name="avgSalesPrice" value={formData.avgSalesPrice} onChange={handleChange} placeholder={"KW Success current average is $516,829"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">2. Average Commission per Side (%)</label>
-                <input type="number" step="0.01" name="avgCommissionPercent" value={formData.avgCommissionPercent} onChange={handleChange}
+                <input type="number" step="0.01" name="avgCommissionPercent" value={formData.avgCommissionPercent} onChange={handleChange} placeholder={"Commissions are negotiable, input what you plan to negotiate as your fee in 2026"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
@@ -1490,17 +1490,12 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">31. What % of Database that will transact this year</label>
-                <input type="number" name="databaseTransactPercent" value={formData.databaseTransactPercent} onChange={handleChange}
+                <input type="number" name="databaseTransactPercent" value={formData.databaseTransactPercent} onChange={handleChange} placeholder={"Historically on avg 6% of your contacts will do a transaction each year"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">32 Of those in your database that will do a transaction this year, what % will you capture?</label>
-                <input type="number" name="databaseCapturePercent" value={formData.databaseCapturePercent} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">37. How many conversations does it take you to CREATE at Appt Opportunity?</label>
-                <input type="number" name="convosPerAppt" value={formData.convosPerAppt} onChange={handleChange}
+                <input type="number" name="databaseCapturePercent" value={formData.databaseCapturePercent} onChange={handleChange} placeholder={"Ideally this is 100$, but usually between 55-65% for most agents."}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
@@ -1528,13 +1523,18 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">37. How many conversations does it take you to CREATE at Appt Opportunity?</label>
+                <input type="number" name="convosPerAppt" value={formData.convosPerAppt} onChange={handleChange} placeholder={"This is largely determined on who you're calling, your value & skill. We are seeing this take between 30-45 Conversations to set an appt."}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">38. How many Open Houses are you committed to holding this year?</label>
-                <input type="number" name="openHouses" value={formData.openHouses} onChange={handleChange}
+                <input type="number" name="openHouses" value={formData.openHouses} onChange={handleChange} placeholder={"This can be a great source to generate new contacts that are in the market RIGHT NOW."}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">39. How many Client appreciation events are you committed to this year?</label>
-                <input type="number" name="clientEvents" value={formData.clientEvents} onChange={handleChange}
+                <input type="number" name="clientEvents" value={formData.clientEvents} onChange={handleChange} placeholder={"Lean-in to the office ones"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
@@ -1544,7 +1544,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">41. How many social posts are you committed to this year?</label>
-                <input type="number" name="socialPosts" value={formData.socialPosts} onChange={handleChange}
+                <input type="number" name="socialPosts" value={formData.socialPosts} onChange={handleChange} placeholder={"Tell your story!"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
