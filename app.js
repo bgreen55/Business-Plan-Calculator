@@ -900,6 +900,7 @@ const RealEstateBusinessPlan = () => {
                       <span className="font-semibold">{phoneContactsNotMet}</span>
                     </div>
                   </div>
+                  <div className="pt-2 mt-2 border-t"></div>
                   <h2 className="text-xl font-bold text-gray-800 mb-4">Social Connections</h2>    
                   <div className="space-y-3">
                     <div className="flex justify-between pt-2 mt-2 border-t">
