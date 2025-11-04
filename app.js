@@ -1325,9 +1325,10 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             {formData.kwCares === 'yes' && (
               <div className="mb-4 ml-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">16a. KW Success Cares Amount Per Transaction? ($)</label>
-                <input type="number" name="tcAmount" value={formData.kwCares} onChange={handleChange}
+                <input type="number" name="kwCaresAmount" value={formData.kwCaresAmount} onChange={handleChange}
                   className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
+            )}
   
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">17. Any other cost of sale?</label>
