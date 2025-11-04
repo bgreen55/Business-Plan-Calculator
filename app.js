@@ -602,11 +602,19 @@ const RealEstateBusinessPlan = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <p className="text-gray-700">Average Commission:</p>
-    <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
+                  <p className="text-2xl font-bold text-gray-800">${formatCurrency(avgCommissionDollar)}</p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <p className="text-gray-700">Units Sold:</p>
                   <p className="text-2xl font-bold text-gray-800">{goalTrans}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Listing Appts/Month:</p>
+                  <p className="text-2xl font-bold text-gray-800">{(listingApptsNeeded / 12).toFixed(1)}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700">Buyer Appts/Month:</p>
+                  <p className="text-2xl font-bold text-gray-800">{(buyerApptsNeeded / 12).toFixed(1)}</p>
                 </div>
               </div>
 
@@ -615,7 +623,7 @@ const RealEstateBusinessPlan = () => {
                   <h3 className="text-lg font-bold text-gray-800 mb-4">Listing Side Breakdown</h3>
                   <div className="space-y-3">
                     <div>
-           <p className="text-sm text-gray-600">Listings Sold</p>
+                      <p className="text-sm text-gray-600">Listings Sold</p>
                       <p className="text-lg font-semibold">{listingCount} <span className="text-sm text-gray-500">({listingPercent}% of total)</span></p>
                     </div>
                     <div>
@@ -624,44 +632,43 @@ const RealEstateBusinessPlan = () => {
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Conversion Rate (Taken to Sold)</p>
-     <p className="text-lg font-semibold">{listingToSold}%</p>
+                      <p className="text-lg font-semibold">{listingToSold}%</p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Listing Appointments Needed</p>
                       <p className="text-lg font-semibold">{listingApptsNeeded}</p>
-       </div>
+                    </div>
                     <div>
                       <p className="text-sm text-gray-600">Conversion Rate (Appt to Taken)</p>
                       <p className="text-lg font-semibold">{listingApptConv}%</p>
                     </div>
-       </div>
+                 </div>
                 </div>
 
                 <div className="border-l-4 border-purple-500 pl-4">
                   <h3 className="text-lg font-bold text-gray-800 mb-4">Buyer Side Breakdown</h3>
                   <div className="space-y-3">
                     <div>
-               <p className="text-sm text-gray-600">Buyers Closed</p>
+                      <p className="text-sm text-gray-600">Buyers Closed</p>
                       <p className="text-lg font-semibold">{buyerCount} <span className="text-sm text-gray-500">({(100-listingPercent).toFixed(1)}% of total)</span></p>
                     </div>
                     <div>
-                      <p 
-className="text-sm text-gray-600">Buyers Under Contract Needed</p>
+                      <p className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                       <p className="text-lg font-semibold">{buyersUnderContract}</p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Conversion Rate (Contract to Sold)</p>
-          <p className="text-lg font-semibold">{buyerSoldConv}%</p>
+                      <p className="text-lg font-semibold">{buyerSoldConv}%</p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Buyer Appointments Needed</p>
                       <p className="text-lg font-semibold">{buyerApptsNeeded}</p>
-            </div>
+                    </div>
                     <div>
                       <p className="text-sm text-gray-600">Conversion Rate (Appt to Contract)</p>
                       <p className="text-lg font-semibold">{buyerApptConv}%</p>
                     </div>
-            </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -963,6 +970,10 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                     <div className="flex justify-between mt-2 pt-2 border-t">
                       <span className="text-gray-700">Conversations Needed (Monthly):</span>
                       <span className="font-semibold text-lg">{totalConvosPerMonth}</span>
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <span className="text-gray-700">Conversations Needed (Weekly):</span>
+                      <span className="font-semibold text-lg">{(totalConvosNeeded / (52 - vacationWeeks)).toFixed(1)}</span>
                     </div>
                   </div>
                 </div>
@@ -1534,7 +1545,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">39. How many Client appreciation events are you committed to this year?</label>
-                <input type="number" name="clientEvents" value={formData.clientEvents} onChange={handleChange} placeholder={"Lean-in to the office ones"
+                <input type="number" name="clientEvents" value={formData.clientEvents} onChange={handleChange} placeholder={"Lean-in to the office ones"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
