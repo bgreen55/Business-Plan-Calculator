@@ -1356,7 +1356,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Operating Expenses (Annual)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Compensation/Salary Expense ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">18. Compensation/Salary Expense ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.compensation)} (${formatCurrency(recommendedDollars.compensation)})
@@ -1366,7 +1366,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Lead Generation ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">19. Lead Generation ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.leadGen)} (${formatCurrency(recommendedDollars.leadGen)})
@@ -1376,7 +1376,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Occupancy ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">20. Occupancy ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.occupancy)} (${formatCurrency(recommendedDollars.occupancy)})
@@ -1386,7 +1386,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Education and Coaching ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">21. Education and Coaching ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.education)} (${formatCurrency(recommendedDollars.education)})
@@ -1396,7 +1396,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Supplies and Office Expenses ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">22. Supplies and Office Expenses ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.supplies)} (${formatCurrency(recommendedDollars.supplies)})
@@ -1406,7 +1406,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Communication and Tech ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">23. Communication and Tech ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.communication)} (${formatCurrency(recommendedDollars.communication)})
@@ -1416,7 +1416,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Auto ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">24. Auto ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.auto)} (${formatCurrency(recommendedDollars.auto)})
@@ -1426,7 +1426,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Equipment ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">25. Equipment ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.equipment)} (${formatCurrency(recommendedDollars.equipment)})
@@ -1436,7 +1436,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Insurance ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">26. Insurance ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.insurance)} (${formatCurrency(recommendedDollars.insurance)})
@@ -1446,7 +1446,7 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Other Expense ($)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">27. Other Expense ($)</label>
                 {totalGCI > 0 && (
                   <p className="text-xs text-gray-500 mb-1">
                     Rec: {formatPercent(recommendedPercentages.other)} (${formatCurrency(recommendedDollars.other)})
@@ -1463,42 +1463,42 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Lead Generation Model</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1"># in your phone contacts</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">28. How many people are in your phone contacts?</label>
                 <input type="number" name="phoneContacts" value={formData.phoneContacts} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">% of phone contacts you have MET</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">28a. What % of phone contacts you have MET?</label>
                 <input type="number" name="phoneContactsMetPercent" value={formData.phoneContactsMetPercent} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1"># followers (FB/Insta)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">29. How Many followers do you have on FB and Insta?</label>
                 <input type="number" name="socialFollowers" value={formData.socialFollowers} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">% of social connections you have MET</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">29a. What % of social connections you have MET?</label>
                 <input type="number" name="socialFollowersMetPercent" value={formData.socialFollowersMetPercent} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1"># in your Database</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">30. How many people are in your Database?</label>
                 <input type="number" name="databaseCount" value={formData.databaseCount} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">% of Database that will transact this year</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">31. What % of Database that will transact this year</label>
                 <input type="number" name="databaseTransactPercent" value={formData.databaseTransactPercent} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">% of Database transactions you will capture</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">32 Of those in your database that will do a transaction this year, what % will you capture?</label>
                 <input type="number" name="databaseCapturePercent" value={formData.databaseCapturePercent} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Conversations per Appointment</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">37. How many conversations does it take you to CREATE at Appt Opportunity?</label>
                 <input type="number" name="convosPerAppt" value={formData.convosPerAppt} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
@@ -1527,27 +1527,27 @@ className="text-sm text-gray-600">Buyers Under Contract Needed</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Open Houses/yr</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">38. How many Open Houses are you committed to holding this year?</label>
                 <input type="number" name="openHouses" value={formData.openHouses} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Client Events/yr</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">39. How many Client appreciation events are you committed to this year?</label>
                 <input type="number" name="clientEvents" value={formData.clientEvents} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Client Seminars/yr</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">40. How many client seminars are you committed to this year?</label>
                 <input type="number" name="clientSeminars" value={formData.clientSeminars} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Social Posts/yr</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">41. How many social posts are you committed to this year?</label>
                 <input type="number" name="socialPosts" value={formData.socialPosts} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vacation Weeks/yr</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">42. How many weeks of vacation do you want to take this year?</label>
                 <input type="number" name="vacationWeeks" value={formData.vacationWeeks} onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
