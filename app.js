@@ -883,9 +883,9 @@ const RealEstateBusinessPlan = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 print-grid-2-col">
-                {/* Contacts & Database */}
+                {/* Contacts & Social Connects */}
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h2 className="text-xl font-bold text-gray-800 mb-4">Database & Contacts</h2>
+                  <h2 className="text-xl font-bold text-gray-800 mb-4">Phone Contacts</h2>
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Contacts in your phone:</span>
@@ -899,16 +899,19 @@ const RealEstateBusinessPlan = () => {
                       <span className="text-gray-700">Contacts Haven't Met:</span>
                       <span className="font-semibold">{phoneContactsNotMet}</span>
                     </div>
+                  </div>
+                  <h2> className="text-xl font-bold text-gray-800 mb-4">Social Connections</h2>    
+                  <div className="space-y-3">
                     <div className="flex justify-between pt-2 mt-2 border-t">
-                      <span className="text-gray-700">Social Connects:</span>
+                      <span className="text-gray-700">Total Connections:</span>
                       <span className="font-semibold">{socialFollowers}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-700">Social Connects Met:</span>
+                      <span className="text-gray-700">Connections Met:</span>
                       <span className="font-semibold">{socialFollowersMet}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-700">Social Connections Not Met:</span>
+                      <span className="text-gray-700">Connections Not Met:</span>
                       <span className="font-semibold">{socialFollowersNotMet}</span>
                     </div>
                   </div>
