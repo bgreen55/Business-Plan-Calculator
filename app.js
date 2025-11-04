@@ -554,7 +554,11 @@ const RealEstateBusinessPlan = () => {
               {/* ADD THIS NEW PRINT BUTTON */}
               <button
                 onClick={async () => {
-                  // Save to Firebase before printing
+                  // 1. CALL PRINT FIRST
+                  // This is a direct result of the user's click, so it's not blocked.
+                  window.print();
+              
+                  // 2. PREPARE YOUR DATA
                   const calculatedData = {
                     totalGCI,
                     avgCommissionDollar,
@@ -564,18 +568,20 @@ const RealEstateBusinessPlan = () => {
                     opExpenses
                   };
                   
-                  const result = await saveBusinessPlanToFirebase(formData, calculatedData);
-                  
-                  if (result.success) {
-                    console.log('Data saved successfully!');
-                    // Optionally show a success message to the user
-                  } else {
-                    console.error('Failed to save data:', result.error);
-                    // Optionally show an error message to the user
+                  // 3. SAVE TO FIREBASE IN THE BACKGROUND
+                  // You can still 'await' it to get the console log, 
+                  // or you can just let it run without await.
+                  try {
+                    const result = await saveBusinessPlanToFirebase(formData, calculatedData);
+                    
+                    if (result.success) {
+                      console.log('Data saved successfully!');
+                    } else {
+                      console.error('Failed to save data:', result.error);
+                    }
+                  } catch (error) {
+                    console.error('An unexpected error occurred during save:', error);
                   }
-                  
-                  // Print regardless of save success
-                  window.print();
                 }}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-colors duration-200"
               >
