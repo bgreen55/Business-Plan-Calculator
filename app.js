@@ -900,7 +900,7 @@ const RealEstateBusinessPlan = () => {
                       <span className="font-semibold">{phoneContactsNotMet}</span>
                     </div>
                   </div>
-                  <h2> className="text-xl font-bold text-gray-800 mb-4">Social Connections</h2>    
+                  <h2 className="text-xl font-bold text-gray-800 mb-4">Social Connections</h2>    
                   <div className="space-y-3">
                     <div className="flex justify-between pt-2 mt-2 border-t">
                       <span className="text-gray-700">Total Connections:</span>
@@ -1535,12 +1535,13 @@ const RealEstateBusinessPlan = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">37. How many conversations does it take you to CREATE at Appt Opportunity?</label>
-                <input type="number" name="convosPerAppt" value={formData.convosPerAppt} onChange={handleChange} placeholder={"This is largely determined on who you're calling, your value & skill. We are seeing this take between 30-45 Conversations to set an appt."}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
+
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">37. How many conversations does it take you to CREATE at Appt Opportunity?</label>
+              <input type="number" name="convosPerAppt" value={formData.convosPerAppt} onChange={handleChange} placeholder={"This is largely determined on who you're calling, your value & skill. We are seeing this take between 30-45 Conversations to set an appt."}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            </div>        
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">38. How many Open Houses are you committed to holding this year?</label>
                 <input type="number" name="openHouses" value={formData.openHouses} onChange={handleChange} placeholder={"This can be a great source to generate new contacts that are in the market RIGHT NOW."}
@@ -1561,11 +1562,11 @@ const RealEstateBusinessPlan = () => {
                 <input type="number" name="socialPosts" value={formData.socialPosts} onChange={handleChange} placeholder={"Tell your story!"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">42. How many weeks of vacation do you want to take this year?</label>
-                <input type="number" name="vacationWeeks" value={formData.vacationWeeks} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">42. How many weeks of vacation do you want to take this year?</label>
+              <input type="number" name="vacationWeeks" value={formData.vacationWeeks} onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
             </div>
           </section>
 
